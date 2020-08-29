@@ -6,7 +6,7 @@ namespace Meyer.BallChasing.Client
 {
     public class Group
     {
-        public string Id { get; set; }
+        public string BallChasingId { get; set; }
 
         public string Name { get; }
 

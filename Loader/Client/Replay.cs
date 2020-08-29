@@ -4,7 +4,7 @@ namespace Meyer.BallChasing.Client
 {
     public class Replay
     {
-        public string Id { get; set; }
+        public string BallChasingId { get; set; }
 
         public Group Group { get; set; }
 

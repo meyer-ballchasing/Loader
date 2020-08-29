@@ -31,7 +31,7 @@ namespace Meyer.BallChasing.Client
 
             await this.UpsertReplays(group);
 
-            await this.AssertGroupSize(group.Id, group.Replays.Count());
+            await this.AssertGroupSize(group.BallChasingId, group.Replays.Count());
 
             foreach (var child in group.Children)
                 await this.PushGroupRecursive(child);
@@ -46,14 +46,14 @@ namespace Meyer.BallChasing.Client
                 { "team_identification", "by-distinct-players" }
             };
 
-            if (group.Parent != null && !string.IsNullOrWhiteSpace(group.Parent.Id))
-                body.Add("parent", group.Parent.Id);
+            if (group.Parent != null && !string.IsNullOrWhiteSpace(group.Parent.BallChasingId))
+                body.Add("parent", group.Parent.BallChasingId);
 
             try
             {
                 var groupResponse = await restClient.HttpPost<Dictionary<string, string>, Dictionary<string, string>>("groups", body, headers: this.GetHeaders());
 
-                group.Id = groupResponse.Result["id"];
+                group.BallChasingId = groupResponse.Result["id"];
             }
             catch (HttpClientException e) when (e.HttpResponseMessage.StatusCode == HttpStatusCode.BadRequest)
             {
@@ -63,12 +63,12 @@ namespace Meyer.BallChasing.Client
                     { "creator", "me" }
                 };
 
-                if (group.Parent != null && !string.IsNullOrWhiteSpace(group.Parent.Id))
-                    query.Add("group", group.Parent.Id);
+                if (group.Parent != null && !string.IsNullOrWhiteSpace(group.Parent.BallChasingId))
+                    query.Add("group", group.Parent.BallChasingId);
 
                 var groupResponse = await restClient.HttpGet<JObject>("groups", query, headers: this.GetHeaders());
 
-                group.Id = groupResponse.Result["list"][0]["id"].Value<string>();
+                group.BallChasingId = groupResponse.Result["list"][0]["id"].Value<string>();
             }
         }
 
@@ -89,7 +89,7 @@ namespace Meyer.BallChasing.Client
                         headers: this.GetHeaders()
                     );
 
-                    replay.Id = uploadResponse.Result["id"];
+                    replay.BallChasingId = uploadResponse.Result["id"];
 
                     await PutReplayInGroup(replay);
                 }
@@ -97,7 +97,7 @@ namespace Meyer.BallChasing.Client
                 {
                     var body = JsonConvert.DeserializeObject<Dictionary<string, object>>(await e.HttpResponseMessage.Content.ReadAsStringAsync());
 
-                    replay.Id = body["id"].ToString();
+                    replay.BallChasingId = body["id"].ToString();
 
                     await PutReplayInGroup(replay);
                 }
@@ -106,9 +106,9 @@ namespace Meyer.BallChasing.Client
 
         private async Task PutReplayInGroup(Replay replay)
         {
-            await restClient.HttpPatch<dynamic, Dictionary<string, string>>($"replays/{replay.Id}", new
+            await restClient.HttpPatch<dynamic, Dictionary<string, string>>($"replays/{replay.BallChasingId}", new
             {
-                group = replay.Group.Id
+                group = replay.Group.BallChasingId
             },
             headers: this.GetHeaders());
         }
