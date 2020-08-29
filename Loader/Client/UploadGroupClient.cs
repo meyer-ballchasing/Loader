@@ -3,6 +3,7 @@ using Meyer.Common.HttpClient;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -26,9 +27,11 @@ namespace Meyer.BallChasing.Client
 
         public async Task PushGroupRecursive([NotNull] Group group)
         {
-            await UpsertGroup(group);
+            await this.UpsertGroup(group);
 
-            await UpsertReplays(group);
+            await this.UpsertReplays(group);
+
+            await this.AssertGroupSize(group.Id, group.Replays.Count());
 
             foreach (var child in group.Children)
                 await this.PushGroupRecursive(child);
@@ -110,14 +113,14 @@ namespace Meyer.BallChasing.Client
             headers: this.GetHeaders());
         }
 
-        public async Task AssertGroupSize(string groupId, int count)
+        private async Task AssertGroupSize(string groupId, int count)
         {
             int replaysInGroup;
             do
             {
                 replaysInGroup = 
                 (
-                    await restClient.HttpGet<dynamic>(
+                    await restClient.HttpGet<ReplayListResponse>(
                         "replays",
                         parameters: new Dictionary<string, string>
                         {
