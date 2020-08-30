@@ -15,7 +15,7 @@ namespace Meyer.BallChasing.Loader
                     case Aliases.push:
                         args[0] = "Meyer.BallChasing.Push.dll";
                         break;
-                    case Aliases.stats:
+                    case Aliases.pull:
                         args[0] = "Meyer.BallChasing.PullStats.dll";
                         break;
                 }
@@ -44,6 +44,6 @@ namespace Meyer.BallChasing.Loader
     enum Aliases
     {
         push,
-        stats
+        pull
     }
 }
