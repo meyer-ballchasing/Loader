@@ -46,11 +46,15 @@ namespace Meyer.BallChasing.Push
         {
             consoleParameters.Map(args, false);
 
-            Group group = new Group(rootDirectory, null);
+            Group newGroup = new Group(rootDirectory, null);
+            Group savedState = null;
 
-            await ballChasingClient.PushGroupRecursive(group);
+            if (rootDirectory.EnumerateFiles("ballchasing.json").Any())
+                savedState = JsonConvert.DeserializeObject<Group>(await File.ReadAllTextAsync($"{rootDirectory.FullName}/ballchasing.json"));
 
-            await File.WriteAllTextAsync($"{rootDirectory.FullName}/ballchasing.json", JsonConvert.SerializeObject(group, new JsonSerializerSettings
+            await ballChasingClient.PushGroupRecursive(newGroup, savedState);
+
+            await File.WriteAllTextAsync($"{rootDirectory.FullName}/ballchasing.json", JsonConvert.SerializeObject(newGroup, new JsonSerializerSettings
             {
                 ReferenceLoopHandling = ReferenceLoopHandling.Serialize,
                 PreserveReferencesHandling = PreserveReferencesHandling.Objects
