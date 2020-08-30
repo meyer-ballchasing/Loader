@@ -134,13 +134,22 @@ namespace Meyer.BallChasing.Client
                         "replays",
                         parameters: new Dictionary<string, string>
                         {
-                            { "group", group.BallChasingId }
+                            { "group", group.BallChasingId },
+                            { "count", "200" }
                         },
                         headers: this.GetHeaders()
                     )
                 )
                 .Result;
-            } while (response.Count < group.Replays.Count && (DateTime.Now - time).TotalSeconds < 200);
+            } while (response.Count < group.Replays.Count && (DateTime.Now - time).TotalSeconds < 5);
+
+            if(response.Count != group.Replays.Count)
+            {
+                var groupResponse = await restClient.HttpGet<JObject>($"groups/{group.BallChasingId}", headers: this.GetHeaders());
+
+                if (groupResponse.Result["failed_replays"] != null)
+                    return false;
+            }
 
             return response.List
                 .Select(x => x.Id)

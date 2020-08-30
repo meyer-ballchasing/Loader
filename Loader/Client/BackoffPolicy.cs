@@ -34,7 +34,7 @@ namespace Meyer.BallChasing.Client
                     (int)e.HttpResponseMessage.StatusCode == 429
                 )
                 .WaitAndRetryAsync(retryCount, retryAttempt =>
-                    TimeSpan.FromSeconds(retryAttempt * retryCount)
+                    TimeSpan.FromSeconds(retryAttempt + 1)
                 )
                 .ExecuteAsync(request);
         }
