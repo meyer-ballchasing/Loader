@@ -2,6 +2,7 @@
 using Meyer.Common.HttpClient;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -32,8 +33,6 @@ namespace Meyer.BallChasing.Client
             await this.UpsertGroup(localGroup, found);
 
             await this.UpsertReplays(localGroup, found);
-
-            await this.AssertGroupSize(localGroup.BallChasingId, localGroup.Replays.Count());
 
             foreach (var child in localGroup.Children)
                 await this.PushGroupRecursive(child, ballChasingGroup);
@@ -109,6 +108,8 @@ namespace Meyer.BallChasing.Client
                     await PutReplayInGroup(replay);
                 }
             }
+
+            await this.AssertGroup(localGroup);
         }
 
         private async Task PutReplayInGroup(Replay replay)
@@ -120,25 +121,30 @@ namespace Meyer.BallChasing.Client
             headers: this.GetHeaders());
         }
 
-        private async Task AssertGroupSize(string groupId, int count)
+        private async Task<bool> AssertGroup(Group group)
         {
-            int replaysInGroup;
+            var time = DateTime.Now;
+
+            ReplayListResponse response = null;
             do
             {
-                replaysInGroup = 
+                response =
                 (
                     await restClient.HttpGet<ReplayListResponse>(
                         "replays",
                         parameters: new Dictionary<string, string>
                         {
-                            { "group", groupId }
+                            { "group", group.BallChasingId }
                         },
                         headers: this.GetHeaders()
                     )
                 )
-                .Result
-                .Count;
-            } while (replaysInGroup < count);
+                .Result;
+            } while (response.Count < group.Replays.Count && (DateTime.Now - time).TotalSeconds < 200);
+
+            return response.List
+                .Select(x => x.Id)
+                .SequenceEqual(group.Replays.Select(x => x.BallChasingId));
         }
 
         private Dictionary<string, string> GetHeaders() => new Dictionary<string, string> { { "Authorization", this.accessKey } };
