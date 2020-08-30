@@ -49,7 +49,7 @@ namespace Meyer.BallChasing.Client
                 this.Parent = parent;
         }
 
-        public Group FindGroupIn(Group group)
+        public Group FindSubGroup(Group group)
         {
             if (group == null)
                 return null;
@@ -59,7 +59,7 @@ namespace Meyer.BallChasing.Client
 
             foreach (var child in this.Children)
             {
-                var found = child.FindGroupIn(group);
+                var found = child.FindSubGroup(group);
                 if (found != null)
                     return found;
             }

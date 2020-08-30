@@ -27,7 +27,7 @@ namespace Meyer.BallChasing.Client
 
         public async Task PushGroupRecursive([NotNull] Group newGroup, Group savedState)
         {
-            Group found = savedState?.FindGroupIn(newGroup);
+            Group found = savedState?.FindSubGroup(newGroup);
 
             await this.UpsertGroup(newGroup, found);
 
