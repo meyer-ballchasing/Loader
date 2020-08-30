@@ -141,7 +141,7 @@ namespace Meyer.BallChasing.Client
                     )
                 )
                 .Result;
-            } while (response.Count < group.Replays.Count && (DateTime.Now - time).TotalSeconds < 5);
+            } while (response.Count < group.Replays.Count && (DateTime.Now - time).TotalSeconds < 90);
 
             if(response.Count != group.Replays.Count)
             {
