@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System.IO;
 
-namespace Meyer.BallChasing.Client
+namespace Meyer.BallChasing.Models
 {
     public class Replay
     {

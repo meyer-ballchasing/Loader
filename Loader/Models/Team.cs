@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Meyer.BallChasing.Client
+namespace Meyer.BallChasing.Models
 {
     public class Team
     {

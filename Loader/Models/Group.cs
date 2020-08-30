@@ -2,7 +2,7 @@
 using System.IO;
 using System.Linq;
 
-namespace Meyer.BallChasing.Client
+namespace Meyer.BallChasing.Models
 {
     public class Group
     {

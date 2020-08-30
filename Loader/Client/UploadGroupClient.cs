@@ -1,4 +1,6 @@
 ﻿using JetBrains.Annotations;
+using Meyer.BallChasing.Client.Models;
+using Meyer.BallChasing.Models;
 using Meyer.Common.HttpClient;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;

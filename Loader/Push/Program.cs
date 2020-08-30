@@ -1,4 +1,5 @@
 ﻿using Meyer.BallChasing.Client;
+using Meyer.BallChasing.Models;
 using Meyer.Common.Console;
 using Meyer.Common.HttpClient;
 using Newtonsoft.Json;

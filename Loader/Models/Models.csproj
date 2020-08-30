@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Authors>Meyer</Authors>
+    <Description>Models for ballchasing.com/api</Description>
+    <Copyright>Copyright 2020</Copyright>
+    <Version>1.0.0.0</Version>
+    <PackageVersion>1.0.0.0</PackageVersion>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyName>Meyer.BallChasing.Models</AssemblyName>
+    <RootNamespace>Meyer.BallChasing.Models</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+  </ItemGroup>
+
+</Project>

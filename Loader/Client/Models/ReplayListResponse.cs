@@ -1,4 +1,4 @@
-﻿namespace Meyer.BallChasing.Client
+﻿namespace Meyer.BallChasing.Client.Models
 {
     internal class ReplayListResponse
     {

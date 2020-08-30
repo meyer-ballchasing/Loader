@@ -1,4 +1,5 @@
 ﻿using JetBrains.Annotations;
+using Meyer.BallChasing.Models;
 using Meyer.Common.HttpClient;
 using System.Collections.Generic;
 using System.Threading.Tasks;
