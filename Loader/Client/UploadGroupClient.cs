@@ -79,15 +79,10 @@ namespace Meyer.BallChasing.Client
 
         private async Task UpsertReplays(Group localGroup, Group ballChasingGroup)
         {
-            foreach (var replay in localGroup.Replays)
-            {
-                if (ballChasingGroup != null)
-                {
-                    //THIS DOES NOT WORK
-                    replay.BallChasingId = ballChasingGroup.MatchReplay(replay)?.BallChasingId;
-                    continue;
-                }
-                    
+            localGroup.MatchReplays(ballChasingGroup);
+
+            foreach (var replay in localGroup.Replays.Where(x => string.IsNullOrEmpty(x.BallChasingId)))
+            {       
                 try
                 {
                     var uploadResponse = await fileClient.Upload<Dictionary<string, string>>

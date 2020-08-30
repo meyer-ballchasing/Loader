@@ -72,16 +72,22 @@ namespace Meyer.BallChasing.Client
 
             return null;
         }
-
-        public Replay MatchReplay(Replay replay)
+        
+        public void MatchReplays(Group group)
         {
-            if (replay == null)
-                return null;
+            if (group == null)
+                return;
 
-            if (this.Replays.Contains(replay))
-                return this.Replays.SingleOrDefault(x => x.Equals(replay));
+            this.Replays = this.Replays.Select(x =>
+            {
+                Replay match = group.Replays.SingleOrDefault(y => y.Equals(x));
 
-            return null;
+                if (match != null && match.Group.Equals(this))
+                    return match;
+
+                return x;
+            })
+            .ToList();
         }
 
         public override int GetHashCode()
@@ -93,7 +99,9 @@ namespace Meyer.BallChasing.Client
         {
             Group compare = obj as Group;
 
-            return compare != null && compare.Name == this.Name;
+            return compare != null
+                && ((compare.BallChasingId != null  && this.BallChasingId != null && compare.BallChasingId == this.BallChasingId) || compare.Name == this.Name)
+                && ((compare.Parent == null && this.Parent == null) || (compare.Parent != null && this.Parent != null && compare.Parent.Equals(this.Parent)));
         }
     }
 }
