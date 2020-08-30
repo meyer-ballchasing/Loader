@@ -42,6 +42,8 @@ namespace Meyer.BallChasing.Push
             }
         };
 
+        private const string SavedStateFileName = "ballchasing.json";
+
         static async Task Main(string[] args)
         {
             consoleParameters.Map(args, false);
@@ -49,12 +51,12 @@ namespace Meyer.BallChasing.Push
             Group newGroup = new Group(rootDirectory, null);
             Group savedState = null;
 
-            if (rootDirectory.EnumerateFiles("ballchasing.json").Any())
-                savedState = JsonConvert.DeserializeObject<Group>(await File.ReadAllTextAsync($"{rootDirectory.FullName}/ballchasing.json"));
+            if (rootDirectory.EnumerateFiles(SavedStateFileName).Any())
+                savedState = JsonConvert.DeserializeObject<Group>(await File.ReadAllTextAsync($"{rootDirectory.FullName}/{SavedStateFileName}"));
 
             await ballChasingClient.PushGroupRecursive(newGroup, savedState);
 
-            await File.WriteAllTextAsync($"{rootDirectory.FullName}/ballchasing.json", JsonConvert.SerializeObject(newGroup, new JsonSerializerSettings
+            await File.WriteAllTextAsync($"{rootDirectory.FullName}/{SavedStateFileName}", JsonConvert.SerializeObject(newGroup, new JsonSerializerSettings
             {
                 ReferenceLoopHandling = ReferenceLoopHandling.Serialize,
                 PreserveReferencesHandling = PreserveReferencesHandling.Objects

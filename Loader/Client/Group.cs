@@ -55,13 +55,19 @@ namespace Meyer.BallChasing.Client
                 return null;
 
             if (group.Equals(this))
+            {
+                group.BallChasingId = this.BallChasingId;
                 return this;
-
+            }
+            
             foreach (var child in this.Children)
             {
                 var found = child.FindSubGroup(group);
                 if (found != null)
+                {
+                    group.BallChasingId = found.BallChasingId;
                     return found;
+                }
             }
 
             return null;
@@ -72,7 +78,14 @@ namespace Meyer.BallChasing.Client
             if (replay == null)
                 return false;
 
-            return this.Replays.Any(x => x.Equals(x));
+            if (this.Replays.Contains(replay))
+            {
+                replay = this.Replays.SingleOrDefault(x => x.Equals(replay));
+                
+                return true;
+            }
+
+            return false;
         }
 
         public override int GetHashCode()

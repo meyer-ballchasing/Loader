@@ -42,10 +42,7 @@ namespace Meyer.BallChasing.Client
         private async Task UpsertGroup(Group newGroup, Group savedState)
         {
             if (savedState != null)
-            {
-                newGroup.BallChasingId = savedState.BallChasingId;
                 return;
-            }
 
             var body = new Dictionary<string, string>
             {
@@ -86,7 +83,7 @@ namespace Meyer.BallChasing.Client
             {
                 if (savedState != null && savedState.ContainsReplay(replay))
                     continue;
-
+                    
                 try
                 {
                     var uploadResponse = await fileClient.Upload<Dictionary<string, string>>
