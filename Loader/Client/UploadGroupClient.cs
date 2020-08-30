@@ -25,63 +25,63 @@ namespace Meyer.BallChasing.Client
             this.accessKey = accessKey;
         }
 
-        public async Task PushGroupRecursive([NotNull] Group newGroup, Group savedState)
+        public async Task PushGroupRecursive([NotNull] Group localGroup, Group ballChasingGroup)
         {
-            Group found = savedState?.FindSubGroup(newGroup);
+            Group found = ballChasingGroup?.FindSubGroup(localGroup);
 
-            await this.UpsertGroup(newGroup, found);
+            await this.UpsertGroup(localGroup, found);
 
-            await this.UpsertReplays(newGroup, found);
+            await this.UpsertReplays(localGroup, found);
 
-            await this.AssertGroupSize(newGroup.BallChasingId, newGroup.Replays.Count());
+            await this.AssertGroupSize(localGroup.BallChasingId, localGroup.Replays.Count());
 
-            foreach (var child in newGroup.Children)
-                await this.PushGroupRecursive(child, savedState);
+            foreach (var child in localGroup.Children)
+                await this.PushGroupRecursive(child, ballChasingGroup);
         }
 
-        private async Task UpsertGroup(Group newGroup, Group savedState)
+        private async Task UpsertGroup(Group localGroup, Group ballChasingGroup)
         {
-            if (savedState != null)
+            if (ballChasingGroup != null)
                 return;
 
             var body = new Dictionary<string, string>
             {
-                { "name", newGroup.Name },
+                { "name", localGroup.Name },
                 { "player_identification", "by-id" },
                 { "team_identification", "by-distinct-players" }
             };
 
-            if (newGroup.Parent != null && !string.IsNullOrWhiteSpace(newGroup.Parent.BallChasingId))
-                body.Add("parent", newGroup.Parent.BallChasingId);
+            if (localGroup.Parent != null && !string.IsNullOrWhiteSpace(localGroup.Parent.BallChasingId))
+                body.Add("parent", localGroup.Parent.BallChasingId);
 
             try
             {
                 var groupResponse = await restClient.HttpPost<Dictionary<string, string>, Dictionary<string, string>>("groups", body, headers: this.GetHeaders());
 
-                newGroup.BallChasingId = groupResponse.Result["id"];
+                localGroup.BallChasingId = groupResponse.Result["id"];
             }
             catch (HttpClientException e) when (e.HttpResponseMessage.StatusCode == HttpStatusCode.BadRequest)
             {
                 var query = new Dictionary<string, string>
                 {
-                    { "name", newGroup.Name },
+                    { "name", localGroup.Name },
                     { "creator", "me" }
                 };
 
-                if (newGroup.Parent != null && !string.IsNullOrWhiteSpace(newGroup.Parent.BallChasingId))
-                    query.Add("group", newGroup.Parent.BallChasingId);
+                if (localGroup.Parent != null && !string.IsNullOrWhiteSpace(localGroup.Parent.BallChasingId))
+                    query.Add("group", localGroup.Parent.BallChasingId);
 
                 var groupResponse = await restClient.HttpGet<JObject>("groups", query, headers: this.GetHeaders());
 
-                newGroup.BallChasingId = groupResponse.Result["list"][0]["id"].Value<string>();
+                localGroup.BallChasingId = groupResponse.Result["list"][0]["id"].Value<string>();
             }
         }
 
-        private async Task UpsertReplays(Group newGroup, Group savedState)
+        private async Task UpsertReplays(Group localGroup, Group ballChasingGroup)
         {
-            foreach (var replay in newGroup.Replays)
+            foreach (var replay in localGroup.Replays)
             {
-                if (savedState != null && savedState.ContainsReplay(replay))
+                if (ballChasingGroup != null && ballChasingGroup.ContainsReplay(replay))
                     continue;
                     
                 try
