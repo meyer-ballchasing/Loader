@@ -22,6 +22,8 @@ namespace Meyer.BallChasing.Client
 
         public Group()
         {
+            this.Children = new List<Group>(0);
+            this.Replays = new List<Replay>(0);
         }
 
         public Group(DirectoryInfo directory, Group parent)
@@ -45,6 +47,44 @@ namespace Meyer.BallChasing.Client
 
             if (parent != null)
                 this.Parent = parent;
+        }
+
+        public Group FindGroupIn(Group group)
+        {
+            if (group == null)
+                return null;
+
+            if (group.Equals(this))
+                return this;
+
+            foreach (var child in this.Children)
+            {
+                var found = child.FindGroupIn(group);
+                if (found != null)
+                    return found;
+            }
+
+            return null;
+        }
+
+        public bool ContainsReplay(Replay replay)
+        {
+            if (replay == null)
+                return false;
+
+            return this.Replays.Any(x => x.Equals(x));
+        }
+
+        public override int GetHashCode()
+        {
+            return this.Name.GetHashCode();
+        }
+
+        public override bool Equals(object obj)
+        {
+            Group compare = obj as Group;
+
+            return compare != null && compare.Name == this.Name;
         }
     }
 }

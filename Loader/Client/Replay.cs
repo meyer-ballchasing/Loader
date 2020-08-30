@@ -21,5 +21,17 @@ namespace Meyer.BallChasing.Client
         }
 
         public bool Public { get; set; } = true;
+
+        public override int GetHashCode()
+        {
+            return this.LocalFilePath.GetHashCode();
+        }
+
+        public override bool Equals(object obj)
+        {
+            Replay compare = obj as Replay;
+
+            return compare != null && compare.LocalFilePath == this.LocalFilePath;
+        }
     }
 }
