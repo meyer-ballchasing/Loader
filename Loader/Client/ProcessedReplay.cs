@@ -1,6 +1,6 @@
 ﻿namespace Meyer.BallChasing.Client
 {
-    public partial class ProecessedReplay
+    public class ProcessedReplay
     {
         public string Id { get; set; }
         

@@ -81,8 +81,12 @@ namespace Meyer.BallChasing.Client
         {
             foreach (var replay in localGroup.Replays)
             {
-                if (ballChasingGroup != null && ballChasingGroup.ContainsReplay(replay))
+                if (ballChasingGroup != null)
+                {
+                    //THIS DOES NOT WORK
+                    replay.BallChasingId = ballChasingGroup.MatchReplay(replay)?.BallChasingId;
                     continue;
+                }
                     
                 try
                 {

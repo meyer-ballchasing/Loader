@@ -73,19 +73,15 @@ namespace Meyer.BallChasing.Client
             return null;
         }
 
-        public bool ContainsReplay(Replay replay)
+        public Replay MatchReplay(Replay replay)
         {
             if (replay == null)
-                return false;
+                return null;
 
             if (this.Replays.Contains(replay))
-            {
-                replay = this.Replays.SingleOrDefault(x => x.Equals(replay));
-                
-                return true;
-            }
+                return this.Replays.SingleOrDefault(x => x.Equals(replay));
 
-            return false;
+            return null;
         }
 
         public override int GetHashCode()

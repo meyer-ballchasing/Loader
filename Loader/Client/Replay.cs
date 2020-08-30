@@ -9,7 +9,8 @@ namespace Meyer.BallChasing.Client
 
         public Group Group { get; set; }
 
-        public ProecessedReplay ProcessedReplay { get; set; }
+        [JsonIgnore]
+        public ProcessedReplay ProcessedReplay { get; set; }
 
         [JsonIgnore]
         public FileInfo LocalFile { get; set; }
