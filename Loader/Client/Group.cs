@@ -8,22 +8,20 @@ namespace Meyer.BallChasing.Client
     {
         public string BallChasingId { get; set; }
 
-        public string Name { get; }
+        public string Name { get; set; }
 
-        public string PlayerIdentification { get; } = "by-id";
+        public string PlayerIdentification { get; set; } = "by-id";
 
-        public string TeamIdentification { get; } = "by-distinct-players";
+        public string TeamIdentification { get; set; } = "by-distinct-players";
 
-        public Group Parent { get; }
+        public Group Parent { get; set; }
 
-        public IEnumerable<Group> Children { get; }
+        public List<Group> Children { get; set; }
 
-        public IEnumerable<Replay> Replays { get; }
+        public List<Replay> Replays { get; set; }
 
         public Group()
         {
-            this.Children = new Group[0];
-            this.Replays = new Replay[0];
         }
 
         public Group(DirectoryInfo directory, Group parent)
@@ -33,7 +31,7 @@ namespace Meyer.BallChasing.Client
             this.Children = directory
                 .EnumerateDirectories("*", SearchOption.TopDirectoryOnly)
                 .Select(x => new Group(x, this))
-                .ToArray();
+                .ToList();
 
             this.Replays = directory
                 .EnumerateFiles("*.replay", SearchOption.TopDirectoryOnly)
@@ -43,7 +41,7 @@ namespace Meyer.BallChasing.Client
                     LocalFile = x,
                     Public = true
                 })
-                .ToArray();
+                .ToList();
 
             if (parent != null)
                 this.Parent = parent;

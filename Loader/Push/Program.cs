@@ -1,6 +1,7 @@
 ﻿using Meyer.BallChasing.Client;
 using Meyer.Common.Console;
 using Meyer.Common.HttpClient;
+using Newtonsoft.Json;
 using System;
 using System.IO;
 using System.Linq;
@@ -10,7 +11,7 @@ namespace Meyer.BallChasing.Push
 {
     class Program
     {
-        private static DirectoryInfo inputDirectory;
+        private static DirectoryInfo rootDirectory;
         private static UploadGroupClient ballChasingClient;
 
         private static ConsoleParameters consoleParameters = new ConsoleParameters
@@ -25,7 +26,7 @@ namespace Meyer.BallChasing.Push
                     if(!x.EnumerateFiles("*.replay", SearchOption.AllDirectories).Any())
                         throw new Exception(x.FullName);
 
-                    inputDirectory = x;
+                    rootDirectory = x;
                 }, "The path to the root directory containing the replay files to push", true),
                 new ActionConsoleParameter(new[] { "key" }, x =>
                 {
@@ -45,7 +46,15 @@ namespace Meyer.BallChasing.Push
         {
             consoleParameters.Map(args, false);
 
-            await ballChasingClient.PushGroupRecursive(new Group(inputDirectory, null));
+            Group group = new Group(rootDirectory, null);
+
+            await ballChasingClient.PushGroupRecursive(group);
+
+            await File.WriteAllTextAsync($"{rootDirectory.FullName}/ballchasing.json", JsonConvert.SerializeObject(group, new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Serialize,
+                PreserveReferencesHandling = PreserveReferencesHandling.Objects
+            }));
         }
     }
 }
