@@ -49,45 +49,49 @@ namespace Meyer.BallChasing.Models
                 this.Parent = parent;
         }
 
-        public Group FindSubGroup(Group group)
+        public Group Find(Group group)
         {
             if (group == null)
                 return null;
 
             if (group.Equals(this))
-            {
-                group.BallChasingId = this.BallChasingId;
                 return this;
-            }
             
             foreach (var child in this.Children)
             {
-                var found = child.FindSubGroup(group);
+                var found = child.Find(group);
                 if (found != null)
-                {
-                    group.BallChasingId = found.BallChasingId;
                     return found;
-                }
             }
 
             return null;
         }
-        
-        public void MergeReplays(Group group)
+
+        public void Merge(Group group)
         {
             if (group == null)
                 return;
 
-            this.Replays = this.Replays.Select(x =>
+            var found = group.Find(this);
+
+            if (found != null)
             {
-                Replay match = group.Replays.SingleOrDefault(y => y.Equals(x));
+                this.BallChasingId = found.BallChasingId;
 
-                if (match != null && match.Group.Equals(this))
-                    return match;
+                this.Replays = this.Replays.Select(x =>
+                {
+                    Replay match = found.Replays.SingleOrDefault(y => y.Equals(x));
 
-                return x;
-            })
-            .ToList();
+                    if (match != null && match.Group.Equals(this))
+                        return match;
+
+                    return x;
+                })
+                .ToList();
+            }
+
+            foreach (var child in this.Children)
+                child.Merge(group);
         }
 
         public override int GetHashCode()
