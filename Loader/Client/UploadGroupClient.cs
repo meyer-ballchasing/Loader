@@ -28,21 +28,21 @@ namespace Meyer.BallChasing.Client
             this.accessKey = accessKey;
         }
 
-        public async Task PushGroupRecursive([NotNull] Group localGroup, Group ballChasingGroup)
+        public async Task PushGroupRecursive([NotNull] Group localGroup, Group shadow)
         {
-            Group found = ballChasingGroup?.FindSubGroup(localGroup);
+            Group found = shadow?.FindSubGroup(localGroup);
 
             await this.UpsertGroup(localGroup, found);
 
             await this.UpsertReplays(localGroup, found);
 
             foreach (var child in localGroup.Children)
-                await this.PushGroupRecursive(child, ballChasingGroup);
+                await this.PushGroupRecursive(child, shadow);
         }
 
-        private async Task UpsertGroup(Group localGroup, Group ballChasingGroup)
+        private async Task UpsertGroup(Group localGroup, Group shadow)
         {
-            if (ballChasingGroup != null)
+            if (shadow != null)
                 return;
 
             var body = new Dictionary<string, string>
@@ -78,9 +78,9 @@ namespace Meyer.BallChasing.Client
             }
         }
 
-        private async Task UpsertReplays(Group localGroup, Group ballChasingGroup)
+        private async Task UpsertReplays(Group localGroup, Group shadow)
         {
-            localGroup.MatchReplays(ballChasingGroup);
+            localGroup.MergeReplays(shadow);
 
             foreach (var replay in localGroup.Replays.Where(x => string.IsNullOrEmpty(x.BallChasingId)))
             {       

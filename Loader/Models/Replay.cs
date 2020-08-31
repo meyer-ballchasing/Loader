@@ -32,7 +32,9 @@ namespace Meyer.BallChasing.Models
         {
             Replay compare = obj as Replay;
 
-            return compare != null && compare.LocalFilePath == this.LocalFilePath;
+            return compare != null
+                && ((compare.BallChasingId != null && this.BallChasingId != null && compare.BallChasingId == this.BallChasingId)
+                    || compare.LocalFilePath == this.LocalFilePath);
         }
     }
 }

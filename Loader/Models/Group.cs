@@ -73,7 +73,7 @@ namespace Meyer.BallChasing.Models
             return null;
         }
         
-        public void MatchReplays(Group group)
+        public void MergeReplays(Group group)
         {
             if (group == null)
                 return;

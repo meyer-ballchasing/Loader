@@ -50,12 +50,12 @@ namespace Meyer.BallChasing.Push
             consoleParameters.Map(args, false);
 
             Group localGroup = new Group(rootDirectory, null);
-            Group ballChasingGroup = null;
+            Group shadow = null;
 
             if (rootDirectory.EnumerateFiles(SavedStateFileName).Any())
-                ballChasingGroup = JsonConvert.DeserializeObject<Group>(await File.ReadAllTextAsync($"{rootDirectory.FullName}/{SavedStateFileName}"));
+                shadow = JsonConvert.DeserializeObject<Group>(await File.ReadAllTextAsync($"{rootDirectory.FullName}/{SavedStateFileName}"));
 
-            await ballChasingClient.PushGroupRecursive(localGroup, ballChasingGroup);
+            await ballChasingClient.PushGroupRecursive(localGroup, shadow);
 
             await File.WriteAllTextAsync($"{rootDirectory.FullName}/{SavedStateFileName}", JsonConvert.SerializeObject(localGroup, new JsonSerializerSettings
             {
