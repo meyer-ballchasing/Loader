@@ -15,7 +15,7 @@ namespace Meyer.BallChasing.Loader
                     case Aliases.push:
                         args[0] = "Meyer.BallChasing.Push.dll";
                         break;
-                    case Aliases.pull:
+                    case Aliases.stats:
                         args[0] = "Meyer.BallChasing.PullStats.dll";
                         break;
                 }
@@ -30,12 +30,12 @@ namespace Meyer.BallChasing.Loader
             }
             catch (IndexOutOfRangeException)
             {
-                Console.WriteLine($"Please specify one of the actions: {string.Join(',', Enum.GetNames(typeof(Aliases)))} along with required arguments");
+                Console.WriteLine($"Please specify one of the actions: {string.Join(", ", Enum.GetNames(typeof(Aliases)))} along with required arguments");
                 Environment.Exit(-1);
             }
             catch (ArgumentException)
             {
-                Console.WriteLine($"Please specify one of the actions: {string.Join(',', Enum.GetNames(typeof(Aliases)))} along with required arguments");
+                Console.WriteLine($"Please specify one of the actions: {string.Join(", ", Enum.GetNames(typeof(Aliases)))} along with required arguments");
                 Environment.Exit(-1);
             }
         }
@@ -44,6 +44,6 @@ namespace Meyer.BallChasing.Loader
     enum Aliases
     {
         push,
-        pull
+        stats
     }
 }
