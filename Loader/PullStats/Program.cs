@@ -43,86 +43,62 @@ namespace Meyer.BallChasing.PullStats
             }
         };
 
-        private const string SavedStateFileName = "ballchasing.json";
+        private const string SavedStateFileName = "shadow.json";
 
         static async Task Main(string[] args)
         {
             consoleParameters.Map(args, false);
 
-            Group ballChasingGroup = JsonConvert.DeserializeObject<Group>(await File.ReadAllTextAsync($"{rootDirectory.FullName}/{SavedStateFileName}"));
+            Group shadow = JsonConvert.DeserializeObject<Group>(await File.ReadAllTextAsync($"{rootDirectory.FullName}/{SavedStateFileName}"));
 
-            await ballChasingClient.PullParsedReplays(ballChasingGroup);
+            await ballChasingClient.PullParsedReplays(shadow);
 
-            await AAA(ballChasingGroup);
+            await Output(shadow);
         }
 
-        private static async Task AAA(Group group)
+        private static async Task Output(Group group)
         {
             foreach (var child in group.Children)
-                await AAA(child);
+                await Output(child);
 
-            var stats = group
+            await OutputGameStats(group);
+            await OutputMatchStats(group);
+        }
+
+        private static async Task OutputGameStats(Group group)
+        {
+            foreach (var item in group
                 .Replays
-                .Select(x => new
-                {
-                    ReplayId = x.BallChasingId,
-                    OrangeStats = x.ProcessedReplay.Orange.Players.Select(y => new
-                    {
-                        y.Name,
-                        Team = 0,
-                        TeamName = x.ProcessedReplay.Orange.Name,
-                        y.Stats.Core.Mvp,
-                        y.Stats.Core.Score,
-                        y.Stats.Core.Goals,
-                        y.Stats.Core.Assists,
-                        y.Stats.Core.Saves,
-                        y.Stats.Core.Shots,
-                        y.Id.Platform,
-                        y.Id.Id
-                    }),
-                    BlueStats = x.ProcessedReplay.Blue.Players.Select(y => new
-                    {
-                        y.Name,
-                        Team = 0,
-                        TeamName = x.ProcessedReplay.Orange.Name,
-                        y.Stats.Core.Mvp,
-                        y.Stats.Core.Score,
-                        y.Stats.Core.Goals,
-                        y.Stats.Core.Assists,
-                        y.Stats.Core.Saves,
-                        y.Stats.Core.Shots,
-                        y.Id.Platform,
-                        y.Id.Id
-                    })
-                })
-                .Select(x => new
-                {
-                    x.ReplayId,
-                    Stats = x.BlueStats
-                        .Union(x.OrangeStats)
-                        .OrderByDescending(x => x.Team)
-                        .ThenByDescending(x => x.Mvp)
-                        .ThenByDescending(x => x.Score)
-                        .Select(x => $"{x.Name}    {x.Team}    {x.Score}    {x.Goals}    {x.Assists}    {x.Saves}    {x.Shots}    {x.Mvp}    {x.Id}    {x.Platform}")
-                })
-                .Select(x =>
+                .Select(x => new { x.LocalFile, Stats = x.GetSummary() }).Select(x =>
                 {
                     var output = new List<string>
                     {
-                            "Name    Team    score    goals    assists    saves    shots    mvp    Id    Platform"
+                        "Name    Team    Mvp    Score    Goals    Assists    Saves    Shots    Cycles    Saviors    Inflicted    Taken    Id    Platform"
                     };
-                    output.AddRange(x.Stats);
+                    output.AddRange(x.Stats.Select(x => $"{x.Name}    {x.TeamName}    {x.Mvp}    {x.Score}    {x.Goals}    {x.Assists}    {x.Saves}    {x.Shots}    {x.Cycles}    {x.Saviors}    {x.Inflicted}    {x.Taken}    {x.Id}    {x.Platform}"));
 
                     return new
                     {
-                        x.ReplayId,
+                        x.LocalFile,
                         Stats = output
                     };
-                })
-                .ToArray();
+                }))
+                await File.WriteAllLinesAsync($"{item.LocalFile.Directory.FullName}/{item.LocalFile.Name}.txt", item.Stats);
+        }
 
-            foreach (var item in stats)
-                await File.WriteAllLinesAsync($"{rootDirectory.FullName}/{item.ReplayId}.txt", item.Stats);
+        private static async Task OutputMatchStats(Group group)
+        {
+            var output = new List<string>
+            {
+                "Name    Team    Mvp    Score    Goals    Assists    Saves    Shots    Cycles    Saviors    Inflicted    Taken"
+            };
+
+            output.AddRange(group.GetSummary()
+                .Select(x => $"{x.Name}    {x.TeamName}    {x.Mvp}    {x.Score}    {x.Goals}    {x.Assists}    {x.Saves}    {x.Shots}    {x.Cycles}    {x.Saviors}    {x.Inflicted}    {x.Taken}")
+            );
+
+            if (output.Count > 1)
+                await File.WriteAllLinesAsync($"{group.Replays.First().LocalFile.Directory.FullName}/{group.Replays.First().LocalFile.Directory.Name}.txt", output);
         }
     }
 }
