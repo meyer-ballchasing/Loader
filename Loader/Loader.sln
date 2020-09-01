@@ -16,6 +16,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{379FD46A-F493-45E6-A3A0-0285D22140DF}"
 	ProjectSection(SolutionItems) = preProject
 		dockerfile = dockerfile
+		run.ps1 = run.ps1
 	EndProjectSection
 EndProject
 Global
