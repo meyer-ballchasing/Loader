@@ -45,7 +45,18 @@ namespace Meyer.BallChasing.PullStats
 
         static async Task Main(string[] args)
         {
-            consoleParameters.Map(args, false);
+            try
+            {
+                consoleParameters.Map(args, false);
+            }
+            catch (Exception e)
+            {
+
+                Console.WriteLine(e.Message);
+                Console.WriteLine(consoleParameters.ToString());
+
+                Environment.Exit(-1);
+            }
 
             Group shadow = JsonConvert.DeserializeObject<Group>(await File.ReadAllTextAsync($"{rootDirectory.FullName}/{Constants.SavedStateFileName}"));
 

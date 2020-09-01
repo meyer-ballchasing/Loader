@@ -39,7 +39,7 @@ namespace Meyer.BallChasing.Push
                         }),
                         new FileUploadClient(UploadGroupClient.BaseEndpoint, new HttpClientOptions()), x
                     );
-                }, "The path to the root directory containing the replay files to push", true)
+                }, "The access key for ballchasing.com/api", true)
             }
         };
 
@@ -47,7 +47,18 @@ namespace Meyer.BallChasing.Push
 
         static async Task Main(string[] args)
         {
-            consoleParameters.Map(args, false);
+            try
+            {
+                consoleParameters.Map(args, false);
+            }
+            catch (Exception e)
+            {
+
+                Console.WriteLine(e.Message);
+                Console.WriteLine(consoleParameters.ToString());
+
+                Environment.Exit(-1);
+            }
 
             Group localGroup = new Group(rootDirectory, null);
 
