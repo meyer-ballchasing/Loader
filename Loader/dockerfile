@@ -1,0 +1,15 @@
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
+COPY . .
+RUN dotnet publish PullStats/PullStats.csproj -c Release -o /app/publish \
+	&& dotnet publish Push/Push.csproj -c Release -o /app/publish \
+	&& dotnet publish Loader/Loader.csproj -c Release -o /app/publish
+
+FROM mcr.microsoft.com/dotnet/core/runtime:latest AS final
+WORKDIR /app
+RUN groupadd -r -g 3000 appgroup \
+  && useradd -r -m -g appgroup -u 1000 app
+
+COPY --chown=1000:3000 --from=build /app/publish .
+
+USER app
+ENTRYPOINT ["dotnet", "Meyer.BallChasing.Loader.dll"]

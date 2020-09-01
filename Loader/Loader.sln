@@ -11,7 +11,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Loader", "Loader\Loader.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PullStats", "PullStats\PullStats.csproj", "{F733E109-21EF-49F1-B1BF-719CD5AB1E90}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Models", "Models\Models.csproj", "{59B27D3D-1F42-4C1E-ACA5-A9DA346193E3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Models", "Models\Models.csproj", "{59B27D3D-1F42-4C1E-ACA5-A9DA346193E3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{379FD46A-F493-45E6-A3A0-0285D22140DF}"
+	ProjectSection(SolutionItems) = preProject
+		dockerfile = dockerfile
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
