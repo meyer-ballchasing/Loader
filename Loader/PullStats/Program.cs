@@ -43,8 +43,6 @@ namespace Meyer.BallChasing.PullStats
             }
         };
 
-
-
         static async Task Main(string[] args)
         {
             consoleParameters.Map(args, false);
