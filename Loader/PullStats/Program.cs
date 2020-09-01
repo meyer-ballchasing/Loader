@@ -25,7 +25,7 @@ namespace Meyer.BallChasing.PullStats
                     if(!x.Exists)
                         throw new DirectoryNotFoundException(x.FullName);
 
-                    if(!x.EnumerateFiles(SavedStateFileName).Any())
+                    if(!x.EnumerateFiles(Constants.SavedStateFileName).Any())
                         throw new Exception(x.FullName);
 
                     rootDirectory = x;
@@ -43,13 +43,13 @@ namespace Meyer.BallChasing.PullStats
             }
         };
 
-        private const string SavedStateFileName = "shadow.json";
+
 
         static async Task Main(string[] args)
         {
             consoleParameters.Map(args, false);
 
-            Group shadow = JsonConvert.DeserializeObject<Group>(await File.ReadAllTextAsync($"{rootDirectory.FullName}/{SavedStateFileName}"));
+            Group shadow = JsonConvert.DeserializeObject<Group>(await File.ReadAllTextAsync($"{rootDirectory.FullName}/{Constants.SavedStateFileName}"));
 
             await ballChasingClient.PullParsedReplays(shadow);
 
@@ -61,11 +61,11 @@ namespace Meyer.BallChasing.PullStats
             foreach (var child in group.Children)
                 await Output(child);
 
-            await OutputGameStats(group);
-            await OutputMatchStats(group);
+            await OutputGameSummary(group);
+            await OutputMatchSummary(group);
         }
 
-        private static async Task OutputGameStats(Group group)
+        private static async Task OutputGameSummary(Group group)
         {
             foreach (var item in group
                 .Replays
@@ -75,7 +75,7 @@ namespace Meyer.BallChasing.PullStats
                     {
                         "Name    Team    Mvp    Score    Goals    Assists    Saves    Shots    Cycles    Saviors    Inflicted    Taken    Id    Platform"
                     };
-                    output.AddRange(x.Stats.Select(x => $"{x.Name}    {x.TeamName}    {x.Mvp}    {x.Score}    {x.Goals}    {x.Assists}    {x.Saves}    {x.Shots}    {x.Cycles}    {x.Saviors}    {x.Inflicted}    {x.Taken}    {x.Id}    {x.Platform}"));
+                    output.AddRange(x.Stats.Select(x => $"{x.Name}{Constants.Delimiter}{x.TeamName}{Constants.Delimiter}{x.Mvp}{Constants.Delimiter}{x.Score}{Constants.Delimiter}{x.Goals}{Constants.Delimiter}{x.Assists}{Constants.Delimiter}{x.Saves}{Constants.Delimiter}{x.Shots}{Constants.Delimiter}{x.Cycles}{Constants.Delimiter}{x.Saviors}{Constants.Delimiter}{x.Inflicted}{Constants.Delimiter}{x.Taken}{Constants.Delimiter}{x.Id}{Constants.Delimiter}{x.Platform}"));
 
                     return new
                     {
@@ -86,7 +86,7 @@ namespace Meyer.BallChasing.PullStats
                 await File.WriteAllLinesAsync($"{item.LocalFile.Directory.FullName}/{item.LocalFile.Name}.txt", item.Stats);
         }
 
-        private static async Task OutputMatchStats(Group group)
+        private static async Task OutputMatchSummary(Group group)
         {
             var output = new List<string>
             {
@@ -94,7 +94,7 @@ namespace Meyer.BallChasing.PullStats
             };
 
             output.AddRange(group.GetSummary()
-                .Select(x => $"{x.Name}    {x.TeamName}    {x.Mvp}    {x.Score}    {x.Goals}    {x.Assists}    {x.Saves}    {x.Shots}    {x.Cycles}    {x.Saviors}    {x.Inflicted}    {x.Taken}")
+                .Select(x => $"{x.Name}{Constants.Delimiter}{x.TeamName}{Constants.Delimiter}{x.Mvp}{Constants.Delimiter}{x.Score}{Constants.Delimiter}{x.Goals}{Constants.Delimiter}{x.Assists}{Constants.Delimiter}{x.Saves}{Constants.Delimiter}{x.Shots}{Constants.Delimiter}{x.Cycles}{Constants.Delimiter}{x.Saviors}{Constants.Delimiter}{x.Inflicted}{Constants.Delimiter}{x.Taken}")
             );
 
             if (output.Count > 1)
