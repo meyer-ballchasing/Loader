@@ -82,7 +82,7 @@ docker run -it --volume C:\Somefolder:/home/Somefolder meyer.ballchasing.loader:
 
 ### Simple
 
-If running docker Direct with mounting a directory is too confusing, alternatively you copy the `run.ps1` file included to the root directory of your replay files. This will mount the current directory for you as a conveneince
+If running docker Direct with mounting a directory is too confusing, alternatively you copy the included `run.ps1` file to the root directory of your replay files. This will mount the current directory for you as a conveneince
 
 ```Powershell
 PS C:\SomeFolder> .\run.ps1 [args]
