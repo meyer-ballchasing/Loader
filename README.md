@@ -84,7 +84,7 @@ Executing the above command should output help text
 
 ### Simple
 
-If running docker Direct is too confusing, alternatively you copy the included `run.ps1` file to the root directory of your replay files. This will automatically use the location of `run.ps1` as the current directory for your conveneince
+If running docker Direct is too confusing, alternatively you can copy the included `run.ps1` file to the root directory of your replay files. This will automatically use the location of `run.ps1` as the current directory for your conveneince
 
 ```Powershell
 PS C:\SomeFolder> .\run.ps1 [args]
