@@ -78,7 +78,7 @@ namespace Meyer.BallChasing.PullStats
         {
             foreach (var item in group
                 .Replays
-                .Select(x => new { x.LocalFile, Stats = x.GetSummary() }).Select(x =>
+                .Select(x => new { x.LocalFile, Stats = ReplayPlayerSummary.GetSummary(x) }).Select(x =>
                 {
                     var output = new List<string>
                     {
@@ -102,8 +102,7 @@ namespace Meyer.BallChasing.PullStats
                 "Name    Team    Mvp    Score    Goals    Assists    Saves    Shots    Cycles    Saviors    Inflicted    Taken"
             };
 
-            output.AddRange(group
-                .GetSummary()
+            output.AddRange(GroupPlayerSummary.GetSummary(group)
                 .Select(x => $"{x.Name}{Constants.Delimiter}{x.TeamName}{Constants.Delimiter}{x.Mvp}{Constants.Delimiter}{x.Score}{Constants.Delimiter}{x.Goals}{Constants.Delimiter}{x.Assists}{Constants.Delimiter}{x.Saves}{Constants.Delimiter}{x.Shots}{Constants.Delimiter}{x.Cycles}{Constants.Delimiter}{x.Saviors}{Constants.Delimiter}{x.Inflicted}{Constants.Delimiter}{x.Taken}")
             );
 

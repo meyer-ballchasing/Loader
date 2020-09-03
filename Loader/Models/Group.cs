@@ -94,33 +94,6 @@ namespace Meyer.BallChasing.Models
                 child.Merge(group);
         }
 
-        public IEnumerable<MatchPlayerSummary> GetSummary()
-        {
-            return this
-                .Replays
-                .SelectMany(x => x.GetSummary())
-                .GroupBy(x => x)
-                .Select(x => new MatchPlayerSummary
-                {
-                    Name = x.Key.Name,
-                    TeamName = x.Key.TeamName,
-                    Score = x.Sum(y => y.Score),
-                    Goals = x.Sum(y => y.Goals),
-                    Assists = x.Sum(y => y.Assists),
-                    Saves = x.Sum(y => y.Saves),
-                    Shots = x.Sum(y => y.Shots),
-                    Inflicted = x.Sum(y => y.Inflicted),
-                    Taken = x.Sum(y => y.Taken),
-                    Mvp = x.Sum(y => y.Mvp ? 1 : 0),
-                    Cycles = x.Sum(y => y.Cycles),
-                    Saviors = x.Sum(y => y.Saviors),
-                })
-                .OrderByDescending(x => x.TeamName)
-                .ThenByDescending(x => x.Mvp)
-                .ThenByDescending(x => x.Score)
-                .AsEnumerable();
-        }
-
         public override int GetHashCode()
         {
             return this.Name.GetHashCode();
