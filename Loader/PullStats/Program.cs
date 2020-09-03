@@ -107,7 +107,7 @@ namespace Meyer.BallChasing.PullStats
             );
 
             if (output.Count > 1)
-                await File.WriteAllLinesAsync($"{group.Replays.First().LocalFile.Directory.FullName}/{group.Replays.First().LocalFile.Directory.Name}.csv", output);
+                await File.WriteAllLinesAsync($"{group.Replays.First().LocalFile.Directory.Parent.FullName}/{group.Replays.First().LocalFile.Directory.Name}.csv", output);
         }
     }
 }
