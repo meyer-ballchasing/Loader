@@ -50,29 +50,25 @@ There are two ways you can get up and running with the Loader. The main way will
 
 ### Prerequisites
 
-The prerequisites will differ depending on how you want to run the Loader and what OS you are starting from. This readme focuses on Windows since it is assumed that you are running from a Windows 10 machine running RL, although the Loader is also supported on Linux through docker (iIf you're running Linux, you most likely know how to set up docker anyway).
+The prerequisites will differ depending on how you want to run the Loader and what OS you are starting from. This readme focuses on Windows since it is assumed that you are running RL from Windows 10, although the Loader is also supported on Linux through docker (if you're running Linux, you most likely know how to set up docker anyway).
 
-* Install [Docker for Windows](https://download.docker.com/win/stable/Docker%20Desktop%20Installer.exe)
+1. Make sure the [Windows Linux Subsystem](https://docs.docker.com/docker-for-windows/wsl/#prerequisites) is enabled
+2. Install [Docker for Windows](https://download.docker.com/win/stable/Docker%20Desktop%20Installer.exe)
+3. Acquire a valid [BallChasing API key](https://ballchasing.com/upload)
 
 ```
-Note: Make sure you you have Virtualization enabled in you BIOS. Instructions will vary. Check with motherboard documentation. Usually under Advanced CPU options or Security 
+Note: Make sure you you have Virtualization enabled in your BIOS. Instructions will vary. Check with motherboard documentation. Usually under Advanced CPU options or Security 
 ```
 
-### Installation
+### Build/Run
 
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
-```sh
-git clone https://github.com/your_username_/Project-Name.git
+Once Docker is running successfully, you should be ready to run the Loader. There is a handy build script included in the repo, which can be executed from a command line
+
+```Powershell
+.\build.cmd
 ```
-3. Install NPM packages
-```sh
-npm install
-```
-4. Enter your API in `config.js`
-```JS
-const API_KEY = 'ENTER YOUR API';
-```
+
+
 
 
 
@@ -90,34 +86,9 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 
 See the [open issues](https://github.com/othneildrew/Best-README-Template/issues) for a list of proposed features (and known issues).
 
-
-
-<!-- CONTRIBUTING -->
-## Contributing
-
-Contributions are what make the open source community such an amazing place to be learn, inspire, and create. Any contributions you make are **greatly appreciated**.
-
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-
-
-<!-- LICENSE -->
 ## License
 
 Distributed under the MIT License. See `LICENSE` for more information.
-
-
-
-<!-- CONTACT -->
-## Contact
-
-Your Name - [@your_twitter](https://twitter.com/your_username) - email@example.com
-
-Project Link: [https://github.com/your_username/repo_name](https://github.com/your_username/repo_name)
 
 ## Acknowledgements
 Meyer.BallChasing.Loader is built entirely on the API's provided by BallChasing. None of this would be possible without their support.
