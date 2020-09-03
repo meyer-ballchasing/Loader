@@ -13,8 +13,8 @@ An example to demonstrate how this works would be in a league setting. Suppose a
 ```
 League Name
 |-- Season 9
-|   |-- Week 1
-|   |   |-- Tier 1
+|   |-- Tier 1
+|   |   |-- Week 1
 |   |   |   |-- TeamA vs TeamB
 |   |   |   |   |-- replay
 |   |   |   |   |-- replay
@@ -24,7 +24,7 @@ League Name
 |   |   |   |   |-- replay
 |   |   |   |   |-- replay
 |   |   |   |   |-- replay
-|   |   |-- Tier 2
+|   |   |-- Week 2
 |   |   |   |-- TeamV vs TeamN
 |   |   |   |   |-- replay
 |   |   |   |   |-- replay
@@ -36,10 +36,10 @@ League Name
 |   |   |   |   |-- replay
 |   |   |   |   |-- replay
         ...
-|   |-- Week 2
+|   |-- Tier 2
     ...
 |-- Season 10
-    ...
+...
 ```
 
 Note: folders can be structured in any way, but this illistrates an example of a complex folder structure
