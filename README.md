@@ -1,12 +1,12 @@
 ## What is it?
 
-Meyer.BallChasing.Loader is a command line utility that can help with organizing and uploading Rocket League replay files to https://ballchasing.com/ and then pulling the parsed stats back down. Simply point the Loader at a folder containing replay files, along with your ballchasing api key, and it will do the rest.
+Meyer.BallChasing.Loader is a command line utility that can help with organizing and uploading Rocket League replay files to BallChasing and then pulling the parsed stats back down. Simply point the Loader at a folder containing replay files, along with your ballchasing api key, and it will do the rest.
 
 Here's what it offers:
 * Complex folder structures are mirrored in ballchasing as Groups within groups
-* Incremental pushes allow for executing multiple times with only pushing changes
+* Uploads are done Incremental, allowing for multiple executions to only push changes
 * Handles rate limits
-* Stats are pulled and aggregated per replay, per sub-group, and per parent group
+* Stats are pulled per replay, per sub-group, and per parent group
 
 Of course, no one template will serve all projects since your needs may be different. So I'll be adding more in the near future. You may also suggest changes by forking this repo and creating a pull request or opening an issue.
 
