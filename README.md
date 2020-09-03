@@ -12,33 +12,33 @@ An example to demonstrate how this works would be in a league setting. Suppose a
 
 ```
 League Name
-+-- Season 9
-|   +-- Week 1
-    |   +-- Tier 1
-        |   +-- TeamA vs TeamB
-            |   +-- replay
-            |   +-- replay
-            |   +-- replay
-        |   +-- TeamC vs TeamD
-            |   +-- replay
-            |   +-- replay
-            |   +-- replay
-            |   +-- replay
-    |   +-- Tier 2
-        |   +-- TeamV vs TeamN
-            |   +-- replay
-            |   +-- replay
-            |   +-- replay
-            |   +-- replay
-        |   +-- TeamH vs TeamR
-            |   +-- replay
-            |   +-- replay
-            |   +-- replay
-            |   +-- replay
+|-- Season 9
+|   |-- Week 1
+|   |   |-- Tier 1
+|   |   |   |-- TeamA vs TeamB
+|   |   |   |   |-- replay
+|   |   |   |   |-- replay
+|   |   |   |   |-- replay
+|   |   |   |-- TeamC vs TeamD
+|   |   |   |   |- replay
+|   |   |   |   |-- replay
+|   |   |   |   |-- replay
+|   |   |   |   |-- replay
+|   |   |-- Tier 2
+|   |   |   |-- TeamV vs TeamN
+|   |   |   |   |-- replay
+|   |   |   |   |-- replay
+|   |   |   |   |-- replay
+|   |   |   |   |-- replay
+|   |   |   |-- TeamH vs TeamR
+|   |   |   |   |-- replay
+|   |   |   |   |-- replay
+|   |   |   |   |-- replay
+|   |   |   |   |-- replay
         ...
-|   +-- Week 2
+|   |-- Week 2
     ...
-+-- Season 10
+|-- Season 10
     ...
 ```
 
