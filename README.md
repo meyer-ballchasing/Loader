@@ -77,8 +77,10 @@ There are two ways to invoke the Loader:
 Since replay files are on a local drive, you need to mount the drive to the container. Aside from that, it's just a matter of running the container and passing arguments
 
 ```Powershell
-docker run -it --volume C:\Somefolder:/home/Somefolder meyer.ballchasing.loader:1.0 [args]
+docker run -it --volume C:\Somefolder:/home/Somefolder meyer.ballchasing.loader:1.0
 ```
+
+Executing the above command should output help text
 
 ### Simple
 
