@@ -7,4 +7,8 @@
     <RootNamespace>Meyer.BallChasing.Loader</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Meyer.Common.Console" Version="3.1.0.2" />
+  </ItemGroup>
+
 </Project>
