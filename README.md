@@ -44,10 +44,6 @@ League Name
 
 Note: folders can be structured in any way, but this illistrates an example of a complex folder structure
 
-### Built With
-Meyer.BallChasing.Loader is built entirely on the API's provided by BallChasing. None of this would be possible without their support.
-* [BallChasing](https://ballchasing.com/)
-
 <!-- GETTING STARTED -->
 ## Getting Started
 
@@ -123,18 +119,6 @@ Your Name - [@your_twitter](https://twitter.com/your_username) - email@example.c
 
 Project Link: [https://github.com/your_username/repo_name](https://github.com/your_username/repo_name)
 
-
-
-<!-- ACKNOWLEDGEMENTS -->
 ## Acknowledgements
-* [GitHub Emoji Cheat Sheet](https://www.webpagefx.com/tools/emoji-cheat-sheet)
-* [Img Shields](https://shields.io)
-* [Choose an Open Source License](https://choosealicense.com)
-* [GitHub Pages](https://pages.github.com)
-* [Animate.css](https://daneden.github.io/animate.css)
-* [Loaders.css](https://connoratherton.com/loaders)
-* [Slick Carousel](https://kenwheeler.github.io/slick)
-* [Smooth Scroll](https://github.com/cferdinandi/smooth-scroll)
-* [Sticky Kit](http://leafo.net/sticky-kit)
-* [JVectorMap](http://jvectormap.com)
-* [Font Awesome](https://fontawesome.com)
+Meyer.BallChasing.Loader is built entirely on the API's provided by BallChasing. None of this would be possible without their support.
+* [BallChasing](https://ballchasing.com/)
