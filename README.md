@@ -8,7 +8,39 @@ Here's what it offers:
 * Handles BallChasing API rate limits
 * Stats are pulled per replay, per sub-group, and per parent group
 
-Of course, no one template will serve all projects since your needs may be different. So I'll be adding more in the near future. You may also suggest changes by forking this repo and creating a pull request or opening an issue.
+An example to demonstrate how this works would be in a league setting. Suppose a league has a bunch of tiers. Each tier plays a scheduled match per week. One could organize that like so:
+
+```
+League Name
++-- Season 9
+|   +-- Week 1
+    |   +-- Tier 1
+        |   +-- TeamA vs TeamB
+            |   +-- replay
+            |   +-- replay
+            |   +-- replay
+        |   +-- TeamC vs TeamD
+            |   +-- replay
+            |   +-- replay
+            |   +-- replay
+            |   +-- replay
+    |   +-- Tier 2
+        |   +-- TeamV vs TeamN
+            |   +-- replay
+            |   +-- replay
+            |   +-- replay
+            |   +-- replay
+        |   +-- TeamH vs TeamR
+            |   +-- replay
+            |   +-- replay
+            |   +-- replay
+            |   +-- replay
+        ...
+|   +-- Week 2
+    ...
++-- Season 10
+    ...
+```
 
 A list of commonly used resources that I find helpful are listed in the acknowledgements.
 
