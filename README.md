@@ -60,28 +60,54 @@ The prerequisites will differ depending on how you want to run the Loader and wh
 Note: Make sure you you have Virtualization enabled in your BIOS. Instructions will vary. Check with motherboard documentation. Usually under Advanced CPU options or Security 
 ```
 
-### Build/Run
-
-Once Docker is running successfully, you should be ready to run the Loader. There is a handy build script included in the repo, which can be executed from a command line
+4. Once Docker is running successfully, you should be ready to run the Loader. There is a handy build script included in the repo, which can be executed from a command line.
 
 ```Powershell
 .\build.cmd
 ```
 
+The Docker image is now built and ready to be run anytime. This step only needs to be done once initially and any time updates are made to the Loader.
 
+## Execution
 
+There are two ways to invoke the Loader:
 
+### Direct
 
-<!-- USAGE EXAMPLES -->
-## Usage
+Since replay files are on a local drive, you need to mount the drive to the container. Aside from that, it's just a matter of running the container and passing arguments
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
+```Powershell
+docker run -it --volume C:\Somefolder:/home/Somefolder meyer.ballchasing.loader:1.0 [args]
+```
 
-_For more examples, please refer to the [Documentation](https://example.com)_
+### Simple
 
+If running docker Direct with mounting a directory is too confusing, alternatively you copy the `run.ps1` file included to the root directory of your replay files. This will mount the current directory for you as a conveneince
 
+```Powershell
+PS C:\SomeFolder> .\run.ps1 [args]
+```
 
-<!-- ROADMAP -->
+### Examples
+
+1. Upload replays: 
+```Powershell
+docker run -it --volume C:\Somefolder:/home/Somefolder meyer.ballchasing.loader:1.0 push -d /home/Test2 -key [your api key here]
+```
+OR
+```Powershell
+PS C:\SomeFolder> .\run.ps1 push -key [your api key here]
+```
+
+2. Pull stats: 
+```Powershell
+docker run -it --volume C:\Somefolder:/home/Somefolder meyer.ballchasing.loader:1.0 pull -d /home/Test2 -key [your api key here]
+```
+OR
+```Powershell
+PS C:\SomeFolder> .\run.ps1 pull -key [your api key here]
+```
+
 ## Roadmap
 
 See the [open issues](https://github.com/othneildrew/Best-README-Template/issues) for a list of proposed features (and known issues).
