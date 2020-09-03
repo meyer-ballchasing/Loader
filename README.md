@@ -42,7 +42,7 @@ League Name
     ...
 ```
 
-A list of commonly used resources that I find helpful are listed in the acknowledgements.
+Note: folders can be structured in any way, but this illistrates an example of a complex folder structure
 
 ### Built With
 Meyer.BallChasing.Loader is built entirely on the API's provided by BallChasing. None of this would be possible without their support.
