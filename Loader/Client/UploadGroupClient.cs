@@ -46,8 +46,8 @@ namespace Meyer.BallChasing.Client
             var body = new Dictionary<string, string>
             {
                 { "name", group.Name },
-                { "player_identification", "by-id" },
-                { "team_identification", "by-distinct-players" }
+                { "player_identification", "by-name" },
+                { "team_identification", "by-player-clusters" }
             };
 
             if (group.Parent != null && !string.IsNullOrWhiteSpace(group.Parent.BallChasingId))

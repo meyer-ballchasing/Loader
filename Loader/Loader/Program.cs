@@ -39,6 +39,9 @@ namespace Meyer.BallChasing.Loader
                 case Aliases.stats:
                     args[0] = "Meyer.BallChasing.PullStats.dll";
                     break;
+                case Aliases.clean:
+                    args[0] = "Meyer.BallChasing.Clean.dll";
+                    break;
             }
 
             Process.Start(new ProcessStartInfo
@@ -55,6 +58,7 @@ namespace Meyer.BallChasing.Loader
     {
         @null,
         push,
-        stats
+        stats,
+        clean
     }
 }

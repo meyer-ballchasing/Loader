@@ -350,3 +350,5 @@ MigrationBackup/
 .ionide/
 /Loader/PullStats/Properties/launchSettings.json
 /Loader/Push/Properties/launchSettings.json
+/Loader/Clean/Properties/launchSettings.json
+/Loader/OutputGoogleSheets/Properties/launchSettings.json

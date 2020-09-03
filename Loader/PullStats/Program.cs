@@ -29,7 +29,7 @@ namespace Meyer.BallChasing.PullStats
                         throw new Exception(x.FullName);
 
                     rootDirectory = x;
-                }, "The path to the root directory containing the replay files to push", true),
+                }, "The path to the root directory containing the replay files", true),
                 new ActionConsoleParameter(new[] { "key" }, x =>
                 {
                     ballChasingClient = new ParsedReplayClient

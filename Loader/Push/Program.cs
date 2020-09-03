@@ -43,8 +43,6 @@ namespace Meyer.BallChasing.Push
             }
         };
 
-        private const string SavedStateFileName = "shadow.json";
-
         static async Task Main(string[] args)
         {
             try
@@ -62,12 +60,12 @@ namespace Meyer.BallChasing.Push
 
             Group localGroup = new Group(rootDirectory, null);
 
-            if (rootDirectory.EnumerateFiles(SavedStateFileName).Any())
-                localGroup.Merge(JsonConvert.DeserializeObject<Group>(await File.ReadAllTextAsync($"{rootDirectory.FullName}/{SavedStateFileName}")));
+            if (rootDirectory.EnumerateFiles(Constants.SavedStateFileName).Any())
+                localGroup.Merge(JsonConvert.DeserializeObject<Group>(await File.ReadAllTextAsync($"{rootDirectory.FullName}/{Constants.SavedStateFileName}")));
 
             await ballChasingClient.PushGroupRecursive(localGroup);
 
-            await File.WriteAllTextAsync($"{rootDirectory.FullName}/{SavedStateFileName}", JsonConvert.SerializeObject(localGroup, new JsonSerializerSettings
+            await File.WriteAllTextAsync($"{rootDirectory.FullName}/{Constants.SavedStateFileName}", JsonConvert.SerializeObject(localGroup, new JsonSerializerSettings
             {
                 ReferenceLoopHandling = ReferenceLoopHandling.Serialize,
                 PreserveReferencesHandling = PreserveReferencesHandling.Objects
