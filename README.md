@@ -44,18 +44,18 @@ League Name
 
 Note: folders can be structured in any way, but this illistrates an example of a complex folder structure
 
-<!-- GETTING STARTED -->
 ## Getting Started
 
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
+There are two ways you can get up and running with the Loader. The main way will be the one mostly discussed here
 
 ### Prerequisites
 
-This is an example of how to list things you need to use the software and how to install them.
-* npm
-```sh
-npm install npm@latest -g
+The prerequisites will differ depending on how you want to run the Loader and what OS you are starting from. This readme focuses on Windows since it is assumed that you are running from a Windows 10 machine running RL, although the Loader is also supported on Linux through docker (iIf you're running Linux, you most likely know how to set up docker anyway).
+
+* Install [Docker for Windows](https://download.docker.com/win/stable/Docker%20Desktop%20Installer.exe)
+
+```
+Note: Make sure you you have Virtualization enabled in you BIOS. Instructions will vary. Check with motherboard documentation. Usually under Advanced CPU options or Security 
 ```
 
 ### Installation
