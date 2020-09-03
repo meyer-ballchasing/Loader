@@ -92,7 +92,7 @@ namespace Meyer.BallChasing.PullStats
                         Stats = output
                     };
                 }))
-                await File.WriteAllLinesAsync($"{item.LocalFile.Directory.FullName}/{item.LocalFile.Name}.txt", item.Stats);
+                await File.WriteAllLinesAsync($"{item.LocalFile.Directory.FullName}/{item.LocalFile.Name}.csv", item.Stats);
         }
 
         private static async Task OutputMatchSummary(Group group)
@@ -107,7 +107,7 @@ namespace Meyer.BallChasing.PullStats
             );
 
             if (output.Count > 1)
-                await File.WriteAllLinesAsync($"{group.Replays.First().LocalFile.Directory.FullName}/{group.Replays.First().LocalFile.Directory.Name}.txt", output);
+                await File.WriteAllLinesAsync($"{group.Replays.First().LocalFile.Directory.FullName}/{group.Replays.First().LocalFile.Directory.Name}.csv", output);
         }
     }
 }
