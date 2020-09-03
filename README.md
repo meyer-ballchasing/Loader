@@ -1,11 +1,12 @@
 ## What is it?
 
-There are many great README templates available on GitHub, however, I didn't find one that really suit my needs so I created this enhanced one. I want to create a README template so amazing that it'll be the last one you ever need.
+Meyer.BallChasing.Loader is a little command line utility that can help with organizing and uploading Rocket League replay files to https://ballchasing.com/ and pulling the parsed stats. Simply point the Loader at a folder containing replay files, along with your ballchasing api key, and it will do the rest.
 
-Here's why:
-* Your time should be focused on creating something amazing. A project that solves a problem and helps others
-* You shouldn't be doing the same tasks over and over like creating a README from scratch
-* You should element DRY principles to the rest of your life :smile:
+Here's what it offers:
+* Complex folder structures are mirrored in ballchasing as Groups within groups
+* Incremental pushes allow for executing multiple times with only pushing changes
+* Handles rate limits
+* Stats are pulled and aggregated per replay, per sub-group, and per parent group
 
 Of course, no one template will serve all projects since your needs may be different. So I'll be adding more in the near future. You may also suggest changes by forking this repo and creating a pull request or opening an issue.
 
