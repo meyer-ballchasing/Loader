@@ -1,8 +1,10 @@
 ﻿using Meyer.BallChasing.Models;
 using Meyer.Common.Console;
+using Newtonsoft.Json;
 using System;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace OutputGoogleSheets
 {
@@ -10,7 +12,7 @@ namespace OutputGoogleSheets
     {
         private static DirectoryInfo rootDirectory;
 
-        private static ConsoleParameters consoleParameters = new ConsoleParameters
+        private static readonly ConsoleParameters consoleParameters = new ConsoleParameters
         {
             NamedConsoleParameters =
             {
@@ -27,7 +29,7 @@ namespace OutputGoogleSheets
             }
         };
 
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
             try
             {
@@ -41,6 +43,10 @@ namespace OutputGoogleSheets
 
                 Environment.Exit(-1);
             }
+
+            Group shadow = JsonConvert.DeserializeObject<Group>(await File.ReadAllTextAsync($"{rootDirectory.FullName}/{Constants.SavedStateFileName}"));
+
+
         }
     }
 }

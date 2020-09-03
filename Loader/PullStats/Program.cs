@@ -16,7 +16,7 @@ namespace Meyer.BallChasing.PullStats
         private static DirectoryInfo rootDirectory;
         private static ParsedReplayClient ballChasingClient;
 
-        private static ConsoleParameters consoleParameters = new ConsoleParameters
+        private static readonly ConsoleParameters consoleParameters = new ConsoleParameters
         {
             NamedConsoleParameters =
             {

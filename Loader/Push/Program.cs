@@ -15,7 +15,7 @@ namespace Meyer.BallChasing.Push
         private static DirectoryInfo rootDirectory;
         private static UploadGroupClient ballChasingClient;
 
-        private static ConsoleParameters consoleParameters = new ConsoleParameters
+        private readonly static ConsoleParameters consoleParameters = new ConsoleParameters
         {
             NamedConsoleParameters =
             {

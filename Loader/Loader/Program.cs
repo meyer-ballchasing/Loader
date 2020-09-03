@@ -8,7 +8,7 @@ namespace Meyer.BallChasing.Loader
     {
         private static Aliases alias;
 
-        private static ConsoleParameters consoleParameters = new ConsoleParameters
+        private static readonly ConsoleParameters consoleParameters = new ConsoleParameters
         {
             OrderedConsoleParameters =
             {
