@@ -41,7 +41,7 @@ namespace Meyer.BallChasing.PullStats
                         }), x
                     );
                 }, "The access key for ballchasing.com/api", true),
-                new NamedEnumConsoleParameter<Outputs>(new[] { "o" }, () => output, "The output strategy to use. Default: csv")
+                new NamedEnumConsoleParameter<Outputs>(new[] { "o" }, () => output, $"The output strategy ({string.Join(", ", Enum.GetNames(typeof(Outputs)).Skip(1))}) to use. Default: csv")
             }
         };
 
@@ -64,7 +64,7 @@ namespace Meyer.BallChasing.PullStats
 
             await ballChasingClient.PullParsedReplays(shadow);
 
-            IOutputStrategy outputStrategy = await OutputStrategyFactroy.GetOutputStrategyAsync(output, rootDirectory);
+            IOutputStrategy outputStrategy = OutputStrategyFactroy.GetOutputStrategyAsync(output, rootDirectory);
 
             await outputStrategy.Output(shadow);
         }

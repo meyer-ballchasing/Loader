@@ -1,9 +1,9 @@
-﻿using Google.Apis.Auth.OAuth2;
+﻿using Google.Apis.Drive.v3;
+using Google.Apis.Drive.v3.Data;
 using Google.Apis.Sheets.v4;
 using Google.Apis.Sheets.v4.Data;
 using Meyer.BallChasing.Models;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -12,18 +12,37 @@ namespace Meyer.BallChasing.PullStats.OutputStrategies
     public class GoogleSheetOutputStrategy : IOutputStrategy
     {
         private readonly SheetsService service;
+        private readonly DriveService driveService;
+        private readonly Dictionary<string, string> googleCredentialInfo;
 
-        public GoogleSheetOutputStrategy(SheetsService service)
+        public GoogleSheetOutputStrategy(SheetsService service, DriveService driveService, Dictionary<string, string> googleCredentialInfo)
         {
             this.service = service;
+            this.driveService = driveService;
+            this.googleCredentialInfo = googleCredentialInfo;
         }
 
         public async Task Output(Group group)
         {
-            await OutputGameSummary(group);
+            Spreadsheet spreadsheet = null;
+
+            this.OutputGameSummary(group, ref spreadsheet);
+
+            var spreadsheetResponse = service.Spreadsheets.Create(spreadsheet).Execute();
+
+            var permissionRequest = driveService.Permissions.Create(new Permission
+            {
+                Type = "user",
+                EmailAddress = googleCredentialInfo["userEmail"],
+                Role = "owner",
+            }, spreadsheetResponse.SpreadsheetId);
+
+            permissionRequest.TransferOwnership = true;
+
+            permissionRequest.Execute();
         }
 
-        private async Task OutputGameSummary(Group group, Spreadsheet spreadsheet = null, int depth = 0)
+        private void OutputGameSummary(Group group, ref Spreadsheet spreadsheet, int depth = 0)
         {
             if (depth == 1)
             {
@@ -106,16 +125,13 @@ namespace Meyer.BallChasing.PullStats.OutputStrategies
                                 new CellData { UserEnteredValue = new ExtendedValue { StringValue = x.Platform } }
                             }
                         })).ToList();
-
-                var aaa = service.Spreadsheets.Create(spreadsheet).Execute();
-
-                return;
             }
 
-            depth++;
-
-            foreach (var child in group.Children)
-                await this.OutputGameSummary(child, spreadsheet, depth);
+            if (depth <= 4)
+            {
+                foreach (var child in group.Children)
+                    this.OutputGameSummary(child, ref spreadsheet, depth + 1);
+            }
         }
     }
 }

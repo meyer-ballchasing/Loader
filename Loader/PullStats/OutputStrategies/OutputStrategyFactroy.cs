@@ -1,44 +1,44 @@
 ﻿using Google.Apis.Auth.OAuth2;
+using Google.Apis.Drive.v3;
+using Google.Apis.Http;
 using Google.Apis.Services;
 using Google.Apis.Sheets.v4;
-using Google.Apis.Util.Store;
+using Newtonsoft.Json;
+using System.Collections.Generic;
 using System.IO;
-using System.Threading;
-using System.Threading.Tasks;
+using System.Security.Cryptography.X509Certificates;
 
 namespace Meyer.BallChasing.PullStats.OutputStrategies
 {
     public static class OutputStrategyFactroy
     {
-        public static async Task<IOutputStrategy> GetOutputStrategyAsync(Outputs output, DirectoryInfo rootDirectory)
+        public static IOutputStrategy GetOutputStrategyAsync(Outputs output, DirectoryInfo rootDirectory)
         {
             switch (output)
             {
                 case Outputs.sheets:
-                    UserCredential credential;
+                    var googleCredentialInfo = JsonConvert.DeserializeObject<Dictionary<string, string>>(File.ReadAllText($"{rootDirectory.FullName}/google.json"));
 
-                    using (var stream = new FileStream($"{rootDirectory.FullName}/credentials.json", FileMode.Open, FileAccess.Read))
+                    var credential = new ServiceAccountCredential(new ServiceAccountCredential.Initializer(googleCredentialInfo["serviceAccountEmail"])
                     {
-                        credential = await GoogleWebAuthorizationBroker.AuthorizeAsync
-                        (
-                            GoogleClientSecrets.Load(stream).Secrets,
-                            new[] { SheetsService.Scope.Spreadsheets },
-                            "user",
-                            CancellationToken.None,
-                            new FileDataStore("token.json", false)
-                        );
+                        Scopes = new[] { SheetsService.Scope.Spreadsheets, DriveService.Scope.Drive }
                     }
+                    .FromCertificate(new X509Certificate2($"{rootDirectory.FullName}/google.p12", googleCredentialInfo["privateKeyPassword"], X509KeyStorageFlags.MachineKeySet | X509KeyStorageFlags.Exportable)));
 
                     return new GoogleSheetOutputStrategy(new SheetsService(new BaseClientService.Initializer
                     {
+                        HttpClientInitializer = credential,
+                        DefaultExponentialBackOffPolicy = ExponentialBackOffPolicy.Exception
+                    }),
+                    new DriveService(new BaseClientService.Initializer
+                    {
                         HttpClientInitializer = credential
-                    }));
+                    }),
+                    googleCredentialInfo);
                 case Outputs.csv:
                 default:
                     return new CsvOutputStrategy();
             }
-
-            
         }
     }
 }
