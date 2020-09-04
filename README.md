@@ -100,7 +100,6 @@ OR
 PS C:\SomeFolder> .\run.ps1 push -key [your api key here]
 ```
 
-
 2. Pull stats with local csv output: 
 ```Powershell
 docker run -it --volume C:\Somefolder:/home/Somefolder meyer.ballchasing.loader:1.0 pull -d /home/Test2 -key [your api key here]
@@ -128,6 +127,8 @@ Note: In order to output to Google Sheets, you must create a Project in [GCP](ht
   "privateKeyPassword": "notasecret"
 }
 ```
+
+Click [here](https://github.com/meyer-ballchasing/Loader/issues/5) for more information on how Google Sheets output is structured
 
 ## Roadmap
 
