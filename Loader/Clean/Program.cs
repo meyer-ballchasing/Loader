@@ -17,8 +17,11 @@ namespace Clean
                     if(!x.Exists)
                         throw new DirectoryNotFoundException(x.FullName);
 
-                    if(x.EnumerateFiles(Constants.SavedStateFileName, SearchOption.TopDirectoryOnly).Any())
+                    if(x.EnumerateFiles(Constants.SavedStateFileName).Any())
                         File.Delete($"{x.FullName}/{Constants.SavedStateFileName}");
+
+                    foreach (var item in x.EnumerateFiles("*.csv", SearchOption.AllDirectories))
+                        item.Delete();
 
                 }, "The path to the root directory containing the replay files", false)
             }
