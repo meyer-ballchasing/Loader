@@ -5,6 +5,10 @@ namespace Meyer.BallChasing.PullStats
 {
     public interface IOutputStrategy
     {
-        Task Output(Group group);
+        Task OutputGameSummary(Group group);
+
+        Task OutputGroupSummary(Group group);
+
+        Task OutputSummaryAcrossGroups(Group group);
     }
 }

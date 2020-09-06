@@ -8,17 +8,18 @@ namespace Meyer.BallChasing.PullStats.OutputStrategies
 {
     public class CsvOutputStrategy : IOutputStrategy
     {
-        public async Task Output(Group group)
-        {
-            foreach (var child in group.Children)
-                await Output(child);
+        private readonly DirectoryInfo rootDirectory;
 
-            await OutputGameSummary(group);
-            await OutputGroupSummary(group);
+        public CsvOutputStrategy(DirectoryInfo rootDirectory)
+        {
+            this.rootDirectory = rootDirectory;
         }
 
-        private static async Task OutputGameSummary(Group group)
+        public async Task OutputGameSummary(Group group)
         {
+            foreach (var child in group.Children)
+                await OutputGameSummary(child);
+
             foreach (var item in group
                 .Replays
                 .Select(x => new { x.LocalFile, Stats = ReplayPlayerSummary.GetSummary(x) }).Select(x =>
@@ -38,8 +39,11 @@ namespace Meyer.BallChasing.PullStats.OutputStrategies
                 await File.WriteAllLinesAsync($"{item.LocalFile.Directory.FullName}/{item.LocalFile.Name}.csv", item.Stats);
         }
 
-        private static async Task OutputGroupSummary(Group group)
+        public async Task OutputGroupSummary(Group group)
         {
+            foreach (var child in group.Children)
+                await OutputGroupSummary(child);
+
             var output = new List<string>
             {
                 "Name    Team    Mvp    Score    Goals    Assists    Saves    Shots    Cycles    Saviors    Inflicted    Taken"
@@ -51,6 +55,30 @@ namespace Meyer.BallChasing.PullStats.OutputStrategies
 
             if (output.Count > 1)
                 await File.WriteAllLinesAsync($"{group.Replays.First().LocalFile.Directory.Parent.FullName}/{group.Replays.First().LocalFile.Directory.Name}.csv", output);
+        }
+
+        public async Task OutputSummaryAcrossGroups(Group group)
+        {
+            foreach (var childDepth4 in group.Children.SelectMany(x => x.Children))
+            {
+                var output = new List<string>
+                {
+                    "Name    Team    Mvp    Score    Goals    Assists    Saves    Shots    Cycles    Saviors    Inflicted    Taken"
+                };
+
+                output.AddRange(GroupPlayerSummary.GetChildrenSummary(childDepth4)
+                    .Select(x => $"{x.Name}{Constants.Delimiter}{x.TeamName}{Constants.Delimiter}{x.Mvp}{Constants.Delimiter}{x.Score}{Constants.Delimiter}{x.Goals}{Constants.Delimiter}{x.Assists}{Constants.Delimiter}{x.Saves}{Constants.Delimiter}{x.Shots}{Constants.Delimiter}{x.Cycles}{Constants.Delimiter}{x.Saviors}{Constants.Delimiter}{x.Inflicted}{Constants.Delimiter}{x.Taken}")
+                );
+
+                if (output.Count > 1)
+                {
+                    Group root = group;
+                    while (root.Parent != null)
+                        root = root.Parent;
+
+                    await File.WriteAllLinesAsync($"{rootDirectory.FullName}/{childDepth4.Parent.Name}/{childDepth4.Name}.csv", output);
+                }
+            }
         }
     }
 }

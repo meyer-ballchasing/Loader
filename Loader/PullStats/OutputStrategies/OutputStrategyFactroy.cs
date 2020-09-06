@@ -37,7 +37,7 @@ namespace Meyer.BallChasing.PullStats.OutputStrategies
                     googleCredentialInfo);
                 case Outputs.csv:
                 default:
-                    return new CsvOutputStrategy();
+                    return new CsvOutputStrategy(rootDirectory);
             }
         }
     }

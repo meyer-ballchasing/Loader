@@ -8,22 +8,29 @@ namespace Clean
 {
     class Program
     {
+        private static bool cleanShadow;
+        private static bool cleanCsv;
+
         private static readonly ConsoleParameters consoleParameters = new ConsoleParameters
         {
             NamedConsoleParameters =
             {
+                new BooleanConsoleParameter(new[] { "shadow" }, () => cleanShadow, "Clean the shadow"),
+                new BooleanConsoleParameter(new[] { "csv" }, () => cleanCsv, "Clean the output csv"),
                 new DirectoryConsoleParameter(new[] { "d" }, x =>
                 {
                     if(!x.Exists)
                         throw new DirectoryNotFoundException(x.FullName);
 
-                    if(x.EnumerateFiles(Constants.SavedStateFileName).Any())
+                    if(cleanShadow && x.EnumerateFiles(Constants.SavedStateFileName).Any())
                         File.Delete($"{x.FullName}/{Constants.SavedStateFileName}");
 
-                    foreach (var item in x.EnumerateFiles("*.csv", SearchOption.AllDirectories))
-                        item.Delete();
-
-                }, "The path to the root directory containing the replay files", false)
+                    if(cleanCsv)
+                    {
+                        foreach (var item in x.EnumerateFiles("*.csv", SearchOption.AllDirectories))
+                            item.Delete();
+                    }
+                }, "The path to the root directory containing the replay files", false),
             }
         };
 

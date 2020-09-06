@@ -14,8 +14,14 @@ namespace Meyer.BallChasing.PullStats
     class Program
     {
         private static DirectoryInfo rootDirectory;
+        
         private static ParsedReplayClient ballChasingClient;
+        
         private static Outputs output = Outputs.csv;
+        
+        private static bool outputReplaySummary;
+        private static bool outputGroupSummary;
+        private static bool outputAcrossGroupSummary;
 
         private static readonly ConsoleParameters consoleParameters = new ConsoleParameters
         {
@@ -41,7 +47,10 @@ namespace Meyer.BallChasing.PullStats
                         }), x
                     );
                 }, "The access key for ballchasing.com/api", true),
-                new NamedEnumConsoleParameter<Outputs>(new[] { "o" }, () => output, $"The output strategy ({string.Join(", ", Enum.GetNames(typeof(Outputs)).Skip(1))}) to use. Default: csv")
+                new NamedEnumConsoleParameter<Outputs>(new[] { "o" }, () => output, $"The output strategy ({string.Join(", ", Enum.GetNames(typeof(Outputs)).Skip(1))}) to use. Default: csv"),
+                new BooleanConsoleParameter(new[] { "replaysummary" }, () => outputReplaySummary, "Output summaries for each replay"),
+                new BooleanConsoleParameter(new[] { "groupsummary" }, () => outputGroupSummary, "Output summaries for group"),
+                new BooleanConsoleParameter(new[] { "summary" }, () => outputAcrossGroupSummary, "Output summary across all groups"),
             }
         };
 
@@ -66,7 +75,9 @@ namespace Meyer.BallChasing.PullStats
 
             IOutputStrategy outputStrategy = OutputStrategyFactroy.GetOutputStrategyAsync(output, rootDirectory);
 
-            await outputStrategy.Output(shadow);
+            await outputStrategy.OutputGameSummary(shadow);
+            await outputStrategy.OutputGroupSummary(shadow);
+            await outputStrategy.OutputSummaryAcrossGroups(shadow);
         }
     }
 }
