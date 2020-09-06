@@ -7,6 +7,7 @@ Here's what it offers:
 * Uploads are done Incremental, allowing for multiple executions to only push changes
 * Handles BallChasing API rate limits
 * Stats are pulled per replay, per sub-group, and per parent group
+* Outputs stats as CSV or Google Sheets
 
 An example to demonstrate how this works would be in a league setting. Suppose a league has a bunch of tiers. Each tier plays a scheduled match per week. One could organize that like so:
 
@@ -52,15 +53,11 @@ There are two ways you can get up and running with the Loader. The main way will
 
 The prerequisites will differ depending on how you want to run the Loader and what OS you are starting from. This readme focuses on Windows since it is assumed that you are running RL from Windows 10, although the Loader is also supported on Linux through docker (if you're running Linux, you most likely know how to set up docker anyway).
 
-1. Make sure the [Windows Linux Subsystem](https://docs.docker.com/docker-for-windows/wsl/#prerequisites) is enabled
-2. Install [Docker for Windows](https://download.docker.com/win/stable/Docker%20Desktop%20Installer.exe)
-3. Acquire a valid [BallChasing API key](https://ballchasing.com/upload)
-
-```
-Note: Make sure you you have Virtualization enabled in your BIOS. Instructions will vary. Check with motherboard documentation. Usually under Advanced CPU options or Security 
-```
-
-4. Once Docker is running successfully, you should be ready to run the Loader. There is a handy build script included in the repo, which can be executed from a command line.
+1. Make sure you you have Virtualization enabled in your BIOS. Instructions will vary. Check with motherboard documentation. Usually under Advanced CPU options or Security
+2. Make sure the [Windows Linux Subsystem](https://docs.docker.com/docker-for-windows/wsl/#prerequisites) is enabled
+3. Install [Docker for Windows](https://download.docker.com/win/stable/Docker%20Desktop%20Installer.exe)
+4. Acquire a valid [BallChasing API key](https://ballchasing.com/upload)
+5. Once Docker is running successfully, you should be ready to build the Loader. There is a handy build script included in the repo, which can be executed from a command line.
 
 ```Powershell
 .\build.cmd
@@ -103,7 +100,7 @@ OR
 PS C:\SomeFolder> .\run.ps1 push -key [your api key here]
 ```
 
-2. Pull stats: 
+2. Pull stats with local csv output: 
 ```Powershell
 docker run -it --volume C:\Somefolder:/home/Somefolder meyer.ballchasing.loader:1.0 pull -d /home/Test2 -key [your api key here]
 ```
@@ -111,6 +108,27 @@ OR
 ```Powershell
 PS C:\SomeFolder> .\run.ps1 pull -key [your api key here]
 ```
+
+2. Pull stats with Google Sheets output: 
+```Powershell
+docker run -it --volume C:\Somefolder:/home/Somefolder meyer.ballchasing.loader:1.0 pull -d /home/Test2 -key [your api key here] -o sheets
+```
+OR
+```Powershell
+PS C:\SomeFolder> .\run.ps1 pull -key [your api key here] -o sheets
+```
+
+Note: In order to output to Google Sheets, you must create a Project in [GCP](https://console.cloud.google.com/iam-admin/iam) and configure a Service Account. Once you have created a Service Account, create a P12 key and copy the downloaded file into the root directory of your replay files as `google.p12`. Additionally, create a file named `google.json` with the following format:
+
+```json
+{
+  "userEmail": "youremailaddress@gmail.com",
+  "serviceAccountEmail": "serviceaccountemail@yourprojectid.iam.gserviceaccount.com",
+  "privateKeyPassword": "notasecret"
+}
+```
+
+Click [here](https://github.com/meyer-ballchasing/Loader/issues/5) for more information on how Google Sheets output is structured
 
 ## Roadmap
 
