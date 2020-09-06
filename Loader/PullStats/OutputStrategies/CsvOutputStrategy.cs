@@ -14,7 +14,7 @@ namespace Meyer.BallChasing.PullStats.OutputStrategies
                 await Output(child);
 
             await OutputGameSummary(group);
-            await OutputMatchSummary(group);
+            await OutputGroupSummary(group);
         }
 
         private static async Task OutputGameSummary(Group group)
@@ -38,7 +38,7 @@ namespace Meyer.BallChasing.PullStats.OutputStrategies
                 await File.WriteAllLinesAsync($"{item.LocalFile.Directory.FullName}/{item.LocalFile.Name}.csv", item.Stats);
         }
 
-        private static async Task OutputMatchSummary(Group group)
+        private static async Task OutputGroupSummary(Group group)
         {
             var output = new List<string>
             {

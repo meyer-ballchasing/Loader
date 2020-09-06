@@ -33,6 +33,8 @@ namespace Meyer.BallChasing.Models
         
         public int Saviors { get; private set; }
 
+        public Group Group { get; private set; }
+
         public static IEnumerable<GroupPlayerSummary> GetSummary(Group group)
         {
             return group
@@ -53,6 +55,7 @@ namespace Meyer.BallChasing.Models
                     Mvp = x.Sum(y => y.Mvp ? 1 : 0),
                     Cycles = x.Sum(y => y.Cycles),
                     Saviors = x.Sum(y => y.Saviors),
+                    Group = x.First().Replay.Group
                 })
                 .OrderByDescending(x => x.TeamName)
                 .ThenByDescending(x => x.Mvp)

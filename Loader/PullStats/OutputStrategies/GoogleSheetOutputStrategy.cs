@@ -24,22 +24,13 @@ namespace Meyer.BallChasing.PullStats.OutputStrategies
 
         public async Task Output(Group group)
         {
-            Spreadsheet spreadsheet = null;
+            Spreadsheet gameSummarySpreadsheet = null;
+            this.OutputGameSummary(group, ref gameSummarySpreadsheet);
+            this.CreateSpreadsheet(gameSummarySpreadsheet);
 
-            this.OutputGameSummary(group, ref spreadsheet);
-
-            var spreadsheetResponse = service.Spreadsheets.Create(spreadsheet).Execute();
-
-            var permissionRequest = driveService.Permissions.Create(new Permission
-            {
-                Type = "user",
-                EmailAddress = googleCredentialInfo["userEmail"],
-                Role = "owner",
-            }, spreadsheetResponse.SpreadsheetId);
-
-            permissionRequest.TransferOwnership = true;
-
-            permissionRequest.Execute();
+            Spreadsheet groupSummarySpreadsheet = null;
+            this.OutputGroupSummary(group, ref groupSummarySpreadsheet);
+            this.CreateSpreadsheet(groupSummarySpreadsheet);
         }
 
         private void OutputGameSummary(Group group, ref Spreadsheet spreadsheet, int depth = 0)
@@ -51,7 +42,7 @@ namespace Meyer.BallChasing.PullStats.OutputStrategies
                     Sheets = new List<Sheet>(),
                     Properties = new SpreadsheetProperties
                     {
-                        Title = group.Name
+                        Title = $"{group.Name} Game Summary"
                     }
                 };
             }
@@ -132,6 +123,109 @@ namespace Meyer.BallChasing.PullStats.OutputStrategies
                 foreach (var child in group.Children)
                     this.OutputGameSummary(child, ref spreadsheet, depth + 1);
             }
+        }
+
+        private void OutputGroupSummary(Group group, ref Spreadsheet spreadsheet, int depth = 0)
+        {
+            if (depth == 1)
+            {
+                spreadsheet = new Spreadsheet
+                {
+                    Sheets = new List<Sheet>(),
+                    Properties = new SpreadsheetProperties
+                    {
+                        Title = $"{group.Name} Group Summary"
+                    }
+                };
+            }
+
+            if (depth == 2)
+            {
+                spreadsheet.Sheets.Add(new Sheet
+                {
+                    Data = new List<GridData>
+                    {
+                        new GridData
+                        {
+                            RowData = new List<RowData>
+                            {
+                                new RowData
+                                {
+                                    Values = new List<CellData>
+                                    {
+                                        new CellData { UserEnteredValue = new ExtendedValue { StringValue = "Week" } },
+                                        new CellData { UserEnteredValue = new ExtendedValue { StringValue = "TeamName" } },
+                                        new CellData { UserEnteredValue = new ExtendedValue { StringValue = "Name" } },
+                                        new CellData { UserEnteredValue = new ExtendedValue { StringValue = "TeamName" } },
+                                        new CellData { UserEnteredValue = new ExtendedValue { StringValue = "Mvp" } },
+                                        new CellData { UserEnteredValue = new ExtendedValue { StringValue = "Score" } },
+                                        new CellData { UserEnteredValue = new ExtendedValue { StringValue = "Goals" } },
+                                        new CellData { UserEnteredValue = new ExtendedValue { StringValue = "Assists" } },
+                                        new CellData { UserEnteredValue = new ExtendedValue { StringValue = "Saves" } },
+                                        new CellData { UserEnteredValue = new ExtendedValue { StringValue = "Shots" } },
+                                        new CellData { UserEnteredValue = new ExtendedValue { StringValue = "Cycles" } },
+                                        new CellData { UserEnteredValue = new ExtendedValue { StringValue = "Saviors" } },
+                                        new CellData { UserEnteredValue = new ExtendedValue { StringValue = "Inflicted" } },
+                                        new CellData { UserEnteredValue = new ExtendedValue { StringValue = "Taken" } }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    Properties = new SheetProperties
+                    {
+                        Title = group.Name
+                    }
+                });
+            }
+
+            if (depth == 4)
+            {
+                spreadsheet.Sheets.Single(x => x.Properties.Title == group.Parent.Parent.Name).Data[0].RowData = spreadsheet.Sheets.Single(x => x.Properties.Title == group.Parent.Parent.Name).Data[0].RowData.Union(
+                    GroupPlayerSummary.GetSummary(group)
+                        .Select(x => new RowData
+                        {
+                            Values = new List<CellData>
+                            {
+                                new CellData { UserEnteredValue = new ExtendedValue { StringValue = x.Group.Parent.Name } },
+                                new CellData { UserEnteredValue = new ExtendedValue { StringValue = x.Group.Name } },
+                                new CellData { UserEnteredValue = new ExtendedValue { StringValue = x.Name } },
+                                new CellData { UserEnteredValue = new ExtendedValue { StringValue = x.TeamName } },
+                                new CellData { UserEnteredValue = new ExtendedValue { NumberValue = x.Mvp } },
+                                new CellData { UserEnteredValue = new ExtendedValue { NumberValue = x.Score } },
+                                new CellData { UserEnteredValue = new ExtendedValue { NumberValue = x.Goals } },
+                                new CellData { UserEnteredValue = new ExtendedValue { NumberValue = x.Assists } },
+                                new CellData { UserEnteredValue = new ExtendedValue { NumberValue = x.Saves } },
+                                new CellData { UserEnteredValue = new ExtendedValue { NumberValue = x.Shots } },
+                                new CellData { UserEnteredValue = new ExtendedValue { NumberValue = x.Cycles } },
+                                new CellData { UserEnteredValue = new ExtendedValue { NumberValue = x.Saviors } },
+                                new CellData { UserEnteredValue = new ExtendedValue { NumberValue = x.Inflicted } },
+                                new CellData { UserEnteredValue = new ExtendedValue { NumberValue = x.Taken } }
+                            }
+                        })).ToList();
+            }
+
+            if (depth <= 4)
+            {
+                foreach (var child in group.Children)
+                    this.OutputGroupSummary(child, ref spreadsheet, depth + 1);
+            }
+        }
+
+        private void CreateSpreadsheet(Spreadsheet spreadsheet)
+        {
+            var spreadsheetResponse = service.Spreadsheets.Create(spreadsheet).Execute();
+
+            var permissionRequest = driveService.Permissions.Create(new Permission
+            {
+                Type = "user",
+                EmailAddress = googleCredentialInfo["userEmail"],
+                Role = "owner",
+            }, spreadsheetResponse.SpreadsheetId);
+
+            permissionRequest.TransferOwnership = true;
+
+            permissionRequest.Execute();
         }
     }
 }
