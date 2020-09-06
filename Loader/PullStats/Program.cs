@@ -75,9 +75,14 @@ namespace Meyer.BallChasing.PullStats
 
             IOutputStrategy outputStrategy = OutputStrategyFactroy.GetOutputStrategyAsync(output, rootDirectory);
 
-            await outputStrategy.OutputGameSummary(shadow);
-            await outputStrategy.OutputGroupSummary(shadow);
-            await outputStrategy.OutputSummaryAcrossGroups(shadow);
+            if (outputReplaySummary)
+                await outputStrategy.OutputGameSummary(shadow);
+
+            if (outputGroupSummary)
+                await outputStrategy.OutputGroupSummary(shadow);
+
+            if (outputAcrossGroupSummary)
+                await outputStrategy.OutputSummaryAcrossGroups(shadow);
         }
     }
 }
