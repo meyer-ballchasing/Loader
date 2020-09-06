@@ -92,7 +92,6 @@ namespace Meyer.BallChasing.Models
                 .AsEnumerable();
         }
 
-
         public override int GetHashCode()
         {
             return this.Name.GetHashCode();
@@ -100,7 +99,7 @@ namespace Meyer.BallChasing.Models
 
         public override bool Equals(object obj)
         {
-            ReplayPlayerSummary compare = obj as ReplayPlayerSummary;
+            GroupPlayerSummary compare = obj as GroupPlayerSummary;
 
             return compare != null
                 && (compare.Id == this.Id || compare.Name == this.Name);
