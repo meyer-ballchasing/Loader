@@ -21,7 +21,7 @@ League Name
 |   |   |   |   |-- replay
 |   |   |   |   |-- replay
 |   |   |   |-- TeamC vs TeamD
-|   |   |   |   |- replay
+|   |   |   |   |-- replay
 |   |   |   |   |-- replay
 |   |   |   |   |-- replay
 |   |   |   |   |-- replay
