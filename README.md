@@ -53,7 +53,7 @@ There are two ways you can get up and running with the Loader. The main way will
 
 The prerequisites will differ depending on how you want to run the Loader and what OS you are starting from. This readme focuses on Windows since it is assumed that you are running RL from Windows 10, although the Loader is also supported on Linux through docker (if you're running Linux, you most likely know how to set up docker anyway).
 
-1. Make sure you you have Virtualization enabled in your BIOS. Instructions will vary. Check with motherboard documentation. Usually under Advanced CPU options or Security
+1. Make sure you have Virtualization enabled in your BIOS. Instructions will vary. Check with motherboard documentation. Usually under Advanced CPU options or Security
 2. Run `init1.ps1` and `init2.ps1` to enable Windows Linux Subsystem (Note: computer will force restart)
 3. Install [Docker for Windows](https://download.docker.com/win/stable/Docker%20Desktop%20Installer.exe)
 4. Acquire a valid [BallChasing API key](https://ballchasing.com/upload)
