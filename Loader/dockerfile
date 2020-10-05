@@ -3,6 +3,7 @@ COPY . .
 RUN dotnet publish PullStats/PullStats.csproj -c Release -o /app/publish \
 	&& dotnet publish Push/Push.csproj -c Release -o /app/publish \
 	&& dotnet publish Loader/Loader.csproj -c Release -o /app/publish
+	&& dotnet publish Clean/Clean.csproj -c Release -o /app/publish
 
 FROM mcr.microsoft.com/dotnet/core/runtime:latest AS final
 WORKDIR /app
