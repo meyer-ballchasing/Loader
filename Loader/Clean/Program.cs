@@ -30,7 +30,7 @@ namespace Clean
                         foreach (var item in x.EnumerateFiles("*.csv", SearchOption.AllDirectories))
                             item.Delete();
                     }
-                }, "The path to the root directory containing the replay files", false),
+                }, "The path to the root directory containing the replay files", true),
             }
         };
 
