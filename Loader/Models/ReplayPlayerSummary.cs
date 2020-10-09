@@ -31,7 +31,13 @@ namespace Meyer.BallChasing.Models
         public string Platform { get; private set; }
         
         public int Saviors => this.Saves / 3;
-        
+
+        public long Duration { get; private set; }
+
+        public bool Overtime { get; private set; }
+
+        public bool IsWin { get; private set; }
+
         public int Cycles
         {
             get
@@ -61,7 +67,10 @@ namespace Meyer.BallChasing.Models
                 x.Stats.Demo.Inflicted,
                 x.Stats.Demo.Taken,
                 x.Id.Platform,
-                x.Id.Id
+                x.Id.Id,
+                replay.ProcessedReplay.Overtime,
+                replay.ProcessedReplay.Duration,
+                IsWin = replay.ProcessedReplay.Orange.Players.Sum(y => y.Stats.Core.Goals) > replay.ProcessedReplay.Blue.Players.Sum(y => y.Stats.Core.Goals)
             })
             .Union(replay.ProcessedReplay.Blue.Players.Select(x => new
             {
@@ -76,7 +85,10 @@ namespace Meyer.BallChasing.Models
                 x.Stats.Demo.Inflicted,
                 x.Stats.Demo.Taken,
                 x.Id.Platform,
-                x.Id.Id
+                x.Id.Id,
+                replay.ProcessedReplay.Overtime,
+                replay.ProcessedReplay.Duration,
+                IsWin = replay.ProcessedReplay.Blue.Players.Sum(y => y.Stats.Core.Goals) > replay.ProcessedReplay.Orange.Players.Sum(y => y.Stats.Core.Goals)
             }))
             .OrderByDescending(x => x.TeamName)
             .ThenByDescending(x => x.Mvp)
@@ -95,6 +107,9 @@ namespace Meyer.BallChasing.Models
                 Taken = x.Taken,
                 Id = x.Id,
                 Platform = x.Platform,
+                Overtime = x.Overtime,
+                Duration = x.Duration,
+                IsWin = x.IsWin,
                 Replay = replay
             });
         }

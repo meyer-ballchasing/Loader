@@ -28,10 +28,18 @@ namespace Meyer.BallChasing.Models
         public string Id { get; private set; }
         
         public string Platform { get; private set; }
-        
+
+        public int GamesPlayed { get; private set; }
+
+        public int GamesWon { get; private set; }
+
         public int Cycles { get; private set; }
         
         public int Saviors { get; private set; }
+
+        public long Duration { get; private set; }
+
+        public int Overtimes { get; private set; }
 
         public Group Group { get; private set; }
 
@@ -45,6 +53,8 @@ namespace Meyer.BallChasing.Models
                 {
                     Name = x.Key.Name,
                     TeamName = x.Key.TeamName,
+                    GamesPlayed = x.Count(),
+                    GamesWon = x.Sum(y => y.IsWin ? 1 : 0),
                     Score = x.Sum(y => y.Score),
                     Goals = x.Sum(y => y.Goals),
                     Assists = x.Sum(y => y.Assists),
@@ -55,6 +65,8 @@ namespace Meyer.BallChasing.Models
                     Mvp = x.Sum(y => y.Mvp ? 1 : 0),
                     Cycles = x.Sum(y => y.Cycles),
                     Saviors = x.Sum(y => y.Saviors),
+                    Duration = x.Sum(y => y.Duration),
+                    Overtimes = x.Sum(y => y.Overtime ? 1 : 0),
                     Group = x.First().Replay.Group
                 })
                 .OrderByDescending(x => x.TeamName)
@@ -74,6 +86,8 @@ namespace Meyer.BallChasing.Models
                 {
                     Name = x.Key.Name,
                     TeamName = x.Key.TeamName,
+                    GamesPlayed = x.Count(),
+                    GamesWon = x.Sum(y => y.IsWin ? 1 : 0),
                     Score = x.Sum(y => y.Score),
                     Goals = x.Sum(y => y.Goals),
                     Assists = x.Sum(y => y.Assists),
@@ -84,6 +98,8 @@ namespace Meyer.BallChasing.Models
                     Mvp = x.Sum(y => y.Mvp ? 1 : 0),
                     Cycles = x.Sum(y => y.Cycles),
                     Saviors = x.Sum(y => y.Saviors),
+                    Duration = x.Sum(y => y.Duration),
+                    Overtimes = x.Sum(y => y.Overtime ? 1 : 0),
                     Group = x.First().Replay.Group
                 })
                 .OrderByDescending(x => x.TeamName)

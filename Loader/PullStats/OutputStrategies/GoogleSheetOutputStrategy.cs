@@ -50,9 +50,10 @@ namespace Meyer.BallChasing.PullStats.OutputStrategies
                                         Values = new List<CellData>
                                         {
                                             new CellData { UserEnteredValue = new ExtendedValue { StringValue = "Week" } },
-                                            new CellData { UserEnteredValue = new ExtendedValue { StringValue = "TeamName" } },
+                                            new CellData { UserEnteredValue = new ExtendedValue { StringValue = "Match" } },
                                             new CellData { UserEnteredValue = new ExtendedValue { StringValue = "Name" } },
                                             new CellData { UserEnteredValue = new ExtendedValue { StringValue = "TeamName" } },
+                                            new CellData { UserEnteredValue = new ExtendedValue { StringValue = "Win" } },
                                             new CellData { UserEnteredValue = new ExtendedValue { StringValue = "Mvp" } },
                                             new CellData { UserEnteredValue = new ExtendedValue { StringValue = "Score" } },
                                             new CellData { UserEnteredValue = new ExtendedValue { StringValue = "Goals" } },
@@ -63,6 +64,8 @@ namespace Meyer.BallChasing.PullStats.OutputStrategies
                                             new CellData { UserEnteredValue = new ExtendedValue { StringValue = "Saviors" } },
                                             new CellData { UserEnteredValue = new ExtendedValue { StringValue = "Inflicted" } },
                                             new CellData { UserEnteredValue = new ExtendedValue { StringValue = "Taken" } },
+                                            new CellData { UserEnteredValue = new ExtendedValue { StringValue = "Duration" } },
+                                            new CellData { UserEnteredValue = new ExtendedValue { StringValue = "Overtime" } },
                                             new CellData { UserEnteredValue = new ExtendedValue { StringValue = "Id" } },
                                             new CellData { UserEnteredValue = new ExtendedValue { StringValue = "Platform" } }
                                         }
@@ -90,6 +93,7 @@ namespace Meyer.BallChasing.PullStats.OutputStrategies
                                         new CellData { UserEnteredValue = new ExtendedValue { StringValue = x.Replay.Group.Name } },
                                         new CellData { UserEnteredValue = new ExtendedValue { StringValue = x.Name } },
                                         new CellData { UserEnteredValue = new ExtendedValue { StringValue = x.TeamName } },
+                                        new CellData { UserEnteredValue = new ExtendedValue { BoolValue = x.IsWin } },
                                         new CellData { UserEnteredValue = new ExtendedValue { BoolValue = x.Mvp } },
                                         new CellData { UserEnteredValue = new ExtendedValue { NumberValue = x.Score } },
                                         new CellData { UserEnteredValue = new ExtendedValue { NumberValue = x.Goals } },
@@ -100,6 +104,8 @@ namespace Meyer.BallChasing.PullStats.OutputStrategies
                                         new CellData { UserEnteredValue = new ExtendedValue { NumberValue = x.Saviors } },
                                         new CellData { UserEnteredValue = new ExtendedValue { NumberValue = x.Inflicted } },
                                         new CellData { UserEnteredValue = new ExtendedValue { NumberValue = x.Taken } },
+                                        new CellData { UserEnteredValue = new ExtendedValue { NumberValue = x.Duration } },
+                                        new CellData { UserEnteredValue = new ExtendedValue { BoolValue = x.Overtime } },
                                         new CellData { UserEnteredValue = new ExtendedValue { StringValue = x.Id } },
                                         new CellData { UserEnteredValue = new ExtendedValue { StringValue = x.Platform } }
                                     }
@@ -141,9 +147,11 @@ namespace Meyer.BallChasing.PullStats.OutputStrategies
                                         Values = new List<CellData>
                                         {
                                             new CellData { UserEnteredValue = new ExtendedValue { StringValue = "Week" } },
-                                            new CellData { UserEnteredValue = new ExtendedValue { StringValue = "TeamName" } },
+                                            new CellData { UserEnteredValue = new ExtendedValue { StringValue = "Match" } },
                                             new CellData { UserEnteredValue = new ExtendedValue { StringValue = "Name" } },
                                             new CellData { UserEnteredValue = new ExtendedValue { StringValue = "TeamName" } },
+                                            new CellData { UserEnteredValue = new ExtendedValue { StringValue = "GamesPlayed" } },
+                                            new CellData { UserEnteredValue = new ExtendedValue { StringValue = "GamesWon" } },
                                             new CellData { UserEnteredValue = new ExtendedValue { StringValue = "Mvp" } },
                                             new CellData { UserEnteredValue = new ExtendedValue { StringValue = "Score" } },
                                             new CellData { UserEnteredValue = new ExtendedValue { StringValue = "Goals" } },
@@ -153,7 +161,9 @@ namespace Meyer.BallChasing.PullStats.OutputStrategies
                                             new CellData { UserEnteredValue = new ExtendedValue { StringValue = "Cycles" } },
                                             new CellData { UserEnteredValue = new ExtendedValue { StringValue = "Saviors" } },
                                             new CellData { UserEnteredValue = new ExtendedValue { StringValue = "Inflicted" } },
-                                            new CellData { UserEnteredValue = new ExtendedValue { StringValue = "Taken" } }
+                                            new CellData { UserEnteredValue = new ExtendedValue { StringValue = "Taken" } },
+                                            new CellData { UserEnteredValue = new ExtendedValue { StringValue = "Duration" } },
+                                            new CellData { UserEnteredValue = new ExtendedValue { StringValue = "Overtime" } },
                                         }
                                     }
                                 }
@@ -178,6 +188,8 @@ namespace Meyer.BallChasing.PullStats.OutputStrategies
                                         new CellData { UserEnteredValue = new ExtendedValue { StringValue = x.Group.Name } },
                                         new CellData { UserEnteredValue = new ExtendedValue { StringValue = x.Name } },
                                         new CellData { UserEnteredValue = new ExtendedValue { StringValue = x.TeamName } },
+                                        new CellData { UserEnteredValue = new ExtendedValue { NumberValue = x.GamesPlayed } },
+                                        new CellData { UserEnteredValue = new ExtendedValue { NumberValue = x.GamesWon } },
                                         new CellData { UserEnteredValue = new ExtendedValue { NumberValue = x.Mvp } },
                                         new CellData { UserEnteredValue = new ExtendedValue { NumberValue = x.Score } },
                                         new CellData { UserEnteredValue = new ExtendedValue { NumberValue = x.Goals } },
@@ -187,7 +199,9 @@ namespace Meyer.BallChasing.PullStats.OutputStrategies
                                         new CellData { UserEnteredValue = new ExtendedValue { NumberValue = x.Cycles } },
                                         new CellData { UserEnteredValue = new ExtendedValue { NumberValue = x.Saviors } },
                                         new CellData { UserEnteredValue = new ExtendedValue { NumberValue = x.Inflicted } },
-                                        new CellData { UserEnteredValue = new ExtendedValue { NumberValue = x.Taken } }
+                                        new CellData { UserEnteredValue = new ExtendedValue { NumberValue = x.Taken } },
+                                        new CellData { UserEnteredValue = new ExtendedValue { NumberValue = x.Duration } },
+                                        new CellData { UserEnteredValue = new ExtendedValue { NumberValue = x.Overtimes } }
                                     }
                                 })
                         )
@@ -227,6 +241,8 @@ namespace Meyer.BallChasing.PullStats.OutputStrategies
                                         Values = new List<CellData>
                                         {
                                             new CellData { UserEnteredValue = new ExtendedValue { StringValue = "Name" } },
+                                            new CellData { UserEnteredValue = new ExtendedValue { StringValue = "GamesPlayed" } },
+                                            new CellData { UserEnteredValue = new ExtendedValue { StringValue = "GamesWon" } },
                                             new CellData { UserEnteredValue = new ExtendedValue { StringValue = "Mvp" } },
                                             new CellData { UserEnteredValue = new ExtendedValue { StringValue = "Score" } },
                                             new CellData { UserEnteredValue = new ExtendedValue { StringValue = "Goals" } },
@@ -236,7 +252,9 @@ namespace Meyer.BallChasing.PullStats.OutputStrategies
                                             new CellData { UserEnteredValue = new ExtendedValue { StringValue = "Cycles" } },
                                             new CellData { UserEnteredValue = new ExtendedValue { StringValue = "Saviors" } },
                                             new CellData { UserEnteredValue = new ExtendedValue { StringValue = "Inflicted" } },
-                                            new CellData { UserEnteredValue = new ExtendedValue { StringValue = "Taken" } }
+                                            new CellData { UserEnteredValue = new ExtendedValue { StringValue = "Taken" } },
+                                            new CellData { UserEnteredValue = new ExtendedValue { StringValue = "Duration" } },
+                                            new CellData { UserEnteredValue = new ExtendedValue { StringValue = "Overtime" } }
                                         }
                                     }
                                 }
@@ -256,6 +274,8 @@ namespace Meyer.BallChasing.PullStats.OutputStrategies
                                 Values = new List<CellData>
                                 {
                                     new CellData { UserEnteredValue = new ExtendedValue { StringValue = x.Name } },
+                                    new CellData { UserEnteredValue = new ExtendedValue { NumberValue = x.GamesPlayed } },
+                                    new CellData { UserEnteredValue = new ExtendedValue { NumberValue = x.GamesWon } },
                                     new CellData { UserEnteredValue = new ExtendedValue { NumberValue = x.Mvp } },
                                     new CellData { UserEnteredValue = new ExtendedValue { NumberValue = x.Score } },
                                     new CellData { UserEnteredValue = new ExtendedValue { NumberValue = x.Goals } },
@@ -265,7 +285,9 @@ namespace Meyer.BallChasing.PullStats.OutputStrategies
                                     new CellData { UserEnteredValue = new ExtendedValue { NumberValue = x.Cycles } },
                                     new CellData { UserEnteredValue = new ExtendedValue { NumberValue = x.Saviors } },
                                     new CellData { UserEnteredValue = new ExtendedValue { NumberValue = x.Inflicted } },
-                                    new CellData { UserEnteredValue = new ExtendedValue { NumberValue = x.Taken } }
+                                    new CellData { UserEnteredValue = new ExtendedValue { NumberValue = x.Taken } },
+                                    new CellData { UserEnteredValue = new ExtendedValue { NumberValue = x.Duration } },
+                                    new CellData { UserEnteredValue = new ExtendedValue { NumberValue = x.Overtimes } }
                                 }
                             })
                     )
