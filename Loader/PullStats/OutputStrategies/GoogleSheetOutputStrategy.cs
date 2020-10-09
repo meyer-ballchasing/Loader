@@ -163,7 +163,7 @@ namespace Meyer.BallChasing.PullStats.OutputStrategies
                                             new CellData { UserEnteredValue = new ExtendedValue { StringValue = "Inflicted" } },
                                             new CellData { UserEnteredValue = new ExtendedValue { StringValue = "Taken" } },
                                             new CellData { UserEnteredValue = new ExtendedValue { StringValue = "Duration" } },
-                                            new CellData { UserEnteredValue = new ExtendedValue { StringValue = "Overtime" } },
+                                            new CellData { UserEnteredValue = new ExtendedValue { StringValue = "Overtimes" } },
                                         }
                                     }
                                 }
@@ -254,7 +254,7 @@ namespace Meyer.BallChasing.PullStats.OutputStrategies
                                             new CellData { UserEnteredValue = new ExtendedValue { StringValue = "Inflicted" } },
                                             new CellData { UserEnteredValue = new ExtendedValue { StringValue = "Taken" } },
                                             new CellData { UserEnteredValue = new ExtendedValue { StringValue = "Duration" } },
-                                            new CellData { UserEnteredValue = new ExtendedValue { StringValue = "Overtime" } }
+                                            new CellData { UserEnteredValue = new ExtendedValue { StringValue = "Overtimes" } }
                                         }
                                     }
                                 }
