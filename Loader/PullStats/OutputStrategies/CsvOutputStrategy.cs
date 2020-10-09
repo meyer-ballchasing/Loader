@@ -42,7 +42,7 @@ namespace Meyer.BallChasing.PullStats.OutputStrategies
 
             var output = new List<string>
             {
-                $"Name{Constants.Delimiter}Team{Constants.Delimiter}GamesPlayed{Constants.Delimiter}GamesWon{Constants.Delimiter}Mvp{Constants.Delimiter}Score{Constants.Delimiter}Goals{Constants.Delimiter}Assists{Constants.Delimiter}Saves{Constants.Delimiter}Shots{Constants.Delimiter}Cycles{Constants.Delimiter}Saviors{Constants.Delimiter}Inflicted{Constants.Delimiter}Taken{Constants.Delimiter}Duration{Constants.Delimiter}Ovetimes"
+                $"Name{Constants.Delimiter}Team{Constants.Delimiter}GP{Constants.Delimiter}GW{Constants.Delimiter}Mvp{Constants.Delimiter}Score{Constants.Delimiter}Goals{Constants.Delimiter}Assists{Constants.Delimiter}Saves{Constants.Delimiter}Shots{Constants.Delimiter}Cycles{Constants.Delimiter}Saviors{Constants.Delimiter}Inflicted{Constants.Delimiter}Taken{Constants.Delimiter}Duration{Constants.Delimiter}Ovetimes"
             };
 
             output.AddRange(GroupPlayerSummary.GetSummary(group)
@@ -59,7 +59,7 @@ namespace Meyer.BallChasing.PullStats.OutputStrategies
             {
                 var output = new List<string>
                 {
-                    $"Name{Constants.Delimiter}GamesPlayed{Constants.Delimiter}GamesWon{Constants.Delimiter}Mvp{Constants.Delimiter}Score{Constants.Delimiter}Goals{Constants.Delimiter}Assists{Constants.Delimiter}Saves{Constants.Delimiter}Shots{Constants.Delimiter}Cycles{Constants.Delimiter}Saviors{Constants.Delimiter}Inflicted{Constants.Delimiter}Taken{Constants.Delimiter}Duration{Constants.Delimiter}Ovetimes"
+                    $"Name{Constants.Delimiter}GP{Constants.Delimiter}GW{Constants.Delimiter}Mvp{Constants.Delimiter}Score{Constants.Delimiter}Goals{Constants.Delimiter}Assists{Constants.Delimiter}Saves{Constants.Delimiter}Shots{Constants.Delimiter}Cycles{Constants.Delimiter}Saviors{Constants.Delimiter}Inflicted{Constants.Delimiter}Taken{Constants.Delimiter}Duration{Constants.Delimiter}Ovetimes"
                 };
 
                 output.AddRange(GroupPlayerSummary.GetChildrenSummary(childDepth4)

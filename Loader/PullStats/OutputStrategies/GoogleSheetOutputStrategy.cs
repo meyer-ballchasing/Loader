@@ -150,8 +150,8 @@ namespace Meyer.BallChasing.PullStats.OutputStrategies
                                             new CellData { UserEnteredValue = new ExtendedValue { StringValue = "Match" } },
                                             new CellData { UserEnteredValue = new ExtendedValue { StringValue = "Name" } },
                                             new CellData { UserEnteredValue = new ExtendedValue { StringValue = "TeamName" } },
-                                            new CellData { UserEnteredValue = new ExtendedValue { StringValue = "GamesPlayed" } },
-                                            new CellData { UserEnteredValue = new ExtendedValue { StringValue = "GamesWon" } },
+                                            new CellData { UserEnteredValue = new ExtendedValue { StringValue = "GP" } },
+                                            new CellData { UserEnteredValue = new ExtendedValue { StringValue = "GW" } },
                                             new CellData { UserEnteredValue = new ExtendedValue { StringValue = "Mvp" } },
                                             new CellData { UserEnteredValue = new ExtendedValue { StringValue = "Score" } },
                                             new CellData { UserEnteredValue = new ExtendedValue { StringValue = "Goals" } },
@@ -241,8 +241,8 @@ namespace Meyer.BallChasing.PullStats.OutputStrategies
                                         Values = new List<CellData>
                                         {
                                             new CellData { UserEnteredValue = new ExtendedValue { StringValue = "Name" } },
-                                            new CellData { UserEnteredValue = new ExtendedValue { StringValue = "GamesPlayed" } },
-                                            new CellData { UserEnteredValue = new ExtendedValue { StringValue = "GamesWon" } },
+                                            new CellData { UserEnteredValue = new ExtendedValue { StringValue = "GP" } },
+                                            new CellData { UserEnteredValue = new ExtendedValue { StringValue = "GW" } },
                                             new CellData { UserEnteredValue = new ExtendedValue { StringValue = "Mvp" } },
                                             new CellData { UserEnteredValue = new ExtendedValue { StringValue = "Score" } },
                                             new CellData { UserEnteredValue = new ExtendedValue { StringValue = "Goals" } },
