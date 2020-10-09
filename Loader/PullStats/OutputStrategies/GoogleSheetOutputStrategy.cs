@@ -226,10 +226,7 @@ namespace Meyer.BallChasing.PullStats.OutputStrategies
                                     {
                                         Values = new List<CellData>
                                         {
-                                            new CellData { UserEnteredValue = new ExtendedValue { StringValue = "Week" } },
-                                            new CellData { UserEnteredValue = new ExtendedValue { StringValue = "TeamName" } },
                                             new CellData { UserEnteredValue = new ExtendedValue { StringValue = "Name" } },
-                                            new CellData { UserEnteredValue = new ExtendedValue { StringValue = "TeamName" } },
                                             new CellData { UserEnteredValue = new ExtendedValue { StringValue = "Mvp" } },
                                             new CellData { UserEnteredValue = new ExtendedValue { StringValue = "Score" } },
                                             new CellData { UserEnteredValue = new ExtendedValue { StringValue = "Goals" } },
@@ -258,10 +255,7 @@ namespace Meyer.BallChasing.PullStats.OutputStrategies
                             {
                                 Values = new List<CellData>
                                 {
-                                    new CellData { UserEnteredValue = new ExtendedValue { StringValue = x.Group.Parent.Name } },
-                                    new CellData { UserEnteredValue = new ExtendedValue { StringValue = x.Group.Name } },
                                     new CellData { UserEnteredValue = new ExtendedValue { StringValue = x.Name } },
-                                    new CellData { UserEnteredValue = new ExtendedValue { StringValue = x.TeamName } },
                                     new CellData { UserEnteredValue = new ExtendedValue { NumberValue = x.Mvp } },
                                     new CellData { UserEnteredValue = new ExtendedValue { NumberValue = x.Score } },
                                     new CellData { UserEnteredValue = new ExtendedValue { NumberValue = x.Goals } },
