@@ -22,7 +22,7 @@ namespace Meyer.BallChasing.PullStats.OutputStrategies
 
             var output = new List<string>
             {
-                "Name    Team    Mvp    Score    Goals    Assists    Saves    Shots    Cycles    Saviors    Inflicted    Taken    Id    Platform"
+                $"Name{Constants.Delimiter}Team{Constants.Delimiter}Mvp{Constants.Delimiter}Score{Constants.Delimiter}Goals{Constants.Delimiter}Assists{Constants.Delimiter}Saves{Constants.Delimiter}Shots{Constants.Delimiter}Cycles{Constants.Delimiter}Saviors{Constants.Delimiter}Inflicted{Constants.Delimiter}Taken{Constants.Delimiter}Id{Constants.Delimiter}Platform"
             };
 
             output.AddRange(group
@@ -42,7 +42,7 @@ namespace Meyer.BallChasing.PullStats.OutputStrategies
 
             var output = new List<string>
             {
-                "Name    Team    Mvp    Score    Goals    Assists    Saves    Shots    Cycles    Saviors    Inflicted    Taken"
+                $"Name{Constants.Delimiter}Team{Constants.Delimiter}Mvp{Constants.Delimiter}Score{Constants.Delimiter}Goals{Constants.Delimiter}Assists{Constants.Delimiter}Saves{Constants.Delimiter}Shots{Constants.Delimiter}Cycles{Constants.Delimiter}Saviors{Constants.Delimiter}Inflicted{Constants.Delimiter}Taken"
             };
 
             output.AddRange(GroupPlayerSummary.GetSummary(group)
@@ -59,11 +59,11 @@ namespace Meyer.BallChasing.PullStats.OutputStrategies
             {
                 var output = new List<string>
                 {
-                    "Name    Team    Mvp    Score    Goals    Assists    Saves    Shots    Cycles    Saviors    Inflicted    Taken"
+                    $"Name{Constants.Delimiter}Mvp{Constants.Delimiter}Score{Constants.Delimiter}Goals{Constants.Delimiter}Assists{Constants.Delimiter}Saves{Constants.Delimiter}Shots{Constants.Delimiter}Cycles{Constants.Delimiter}Saviors{Constants.Delimiter}Inflicted{Constants.Delimiter}Taken"
                 };
 
                 output.AddRange(GroupPlayerSummary.GetChildrenSummary(childDepth4)
-                    .Select(x => $"{x.Name}{Constants.Delimiter}{x.TeamName}{Constants.Delimiter}{x.Mvp}{Constants.Delimiter}{x.Score}{Constants.Delimiter}{x.Goals}{Constants.Delimiter}{x.Assists}{Constants.Delimiter}{x.Saves}{Constants.Delimiter}{x.Shots}{Constants.Delimiter}{x.Cycles}{Constants.Delimiter}{x.Saviors}{Constants.Delimiter}{x.Inflicted}{Constants.Delimiter}{x.Taken}")
+                    .Select(x => $"{x.Name}{Constants.Delimiter}{x.Mvp}{Constants.Delimiter}{x.Score}{Constants.Delimiter}{x.Goals}{Constants.Delimiter}{x.Assists}{Constants.Delimiter}{x.Saves}{Constants.Delimiter}{x.Shots}{Constants.Delimiter}{x.Cycles}{Constants.Delimiter}{x.Saviors}{Constants.Delimiter}{x.Inflicted}{Constants.Delimiter}{x.Taken}")
                 );
 
                 if (output.Count > 1)
