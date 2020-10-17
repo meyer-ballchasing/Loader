@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Meyer.BallChasing.Models
 {
-    public class ReplayPlayerSummary
+    public class ReplayPlayerSummary : EqualityComparer<GroupPlayerSummary>
     {
         public string Name { get; private set; }
         
@@ -116,7 +116,7 @@ namespace Meyer.BallChasing.Models
 
         public override int GetHashCode()
         {
-            return this.Name.GetHashCode();
+            return this.Id.GetHashCode();
         }
 
         public override bool Equals(object obj)
@@ -125,6 +125,16 @@ namespace Meyer.BallChasing.Models
 
             return compare != null
                 && (compare.Id == this.Id || compare.Name == this.Name);
+        }
+
+        public override bool Equals(GroupPlayerSummary x, GroupPlayerSummary y)
+        {
+            return x.Equals(y);
+        }
+
+        public override int GetHashCode(GroupPlayerSummary obj)
+        {
+            return obj.GetHashCode();
         }
     }
 }

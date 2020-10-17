@@ -79,7 +79,8 @@ namespace Meyer.BallChasing.Models
         {
             return group
                 .Children
-                .SelectMany(x => x.Children).SelectMany(x => x.Replays)
+                .SelectMany(x => x.Children)
+                .SelectMany(x => x.Replays)
                 .SelectMany(x => ReplayPlayerSummary.GetSummary(x))
                 .GroupBy(x => x)
                 .Select(x => new GroupPlayerSummary
